@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Book } from './book';
 
 @Injectable()
@@ -53,15 +52,15 @@ export class BookStaticDataService {
     return this.staticBookData;
   }
 
-  getBook(isbn): Book {
+  getBook(isbn: string): Book {
     return this.staticBookData[0];
   }
 
-  updateBook(book): Book {
+  updateBook(book: Book): Book {
     return book;
   }
 
-  createBook(book): Book {
+  createBook(book: Book): Book {
     this.staticBookData.push(book);
     return book;
   }

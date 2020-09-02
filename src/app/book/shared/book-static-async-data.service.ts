@@ -53,15 +53,15 @@ export class BookStaticAsyncDataService {
     return of(this.staticBookData);
   }
 
-  getBookByIsbn(isbn): Observable<Book> {
+  getBookByIsbn(_isbn: string): Observable<Book> {
     return of(this.staticBookData[0]);
   }
 
-  updateBook(book): Observable<Book> {
+  updateBook(book: Book): Observable<Book> {
     return of(book);
   }
 
-  createBook(book): Observable<Book> {
+  createBook(book: Book): Observable<Book> {
     this.staticBookData.push(book);
     return of(book);
   }
