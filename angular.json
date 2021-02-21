@@ -4,7 +4,8 @@
   "newProjectRoot": "projects",
   "cli": {
     "packageManager": "npm",
-    "analytics": "bc75e2aa-c34c-415f-86d5-8371e4b27a94"
+    "analytics": "bc75e2aa-c34c-415f-86d5-8371e4b27a94",
+    "defaultCollection": "@ngrx/schematics"
   },
   "projects": {
     "workshop": {
