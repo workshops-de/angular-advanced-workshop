@@ -1,34 +1,28 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs';
-import { BookApiService } from '../book-api.service';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { bookCollection } from '@store/book';
 import { bookNa } from '../models';
 import { BookListComponent } from './book-list.component';
 
 describe('<ws-book-list>', () => {
   let fixture: ComponentFixture<BookListComponent>;
-  let bookApiMock: jasmine.SpyObj<BookApiService>;
+  let store: MockStore;
 
   beforeEach(() => {
-    bookApiMock = jasmine.createSpyObj<BookApiService>(['getAll']);
-
     TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: BookApiService,
-          useFactory: () => bookApiMock
-        }
-      ],
+      providers: [provideMockStore()],
       declarations: [BookListComponent],
       schemas: [NO_ERRORS_SCHEMA]
     });
+
+    store = TestBed.inject(MockStore);
+    store.overrideSelector(bookCollection as any, [bookNa()]);
   });
 
   describe('When books provided', () => {
     it('renders a list of books', () => {
-      bookApiMock.getAll.and.returnValue(of([bookNa()]));
-
       fixture = TestBed.createComponent(BookListComponent);
       fixture.detectChanges();
 

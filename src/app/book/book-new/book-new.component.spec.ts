@@ -1,39 +1,44 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { MatInputModule } from '@angular/material/input';
+import { MatInputHarness } from '@angular/material/input/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
-import { createComponentFactory, Spectator } from '@ngneat/spectator';
+import { provideMockStore } from '@ngrx/store/testing';
 import { BookNewComponent } from './book-new.component';
 
 describe('<ws-book-new>', () => {
-  const matInputSelector = '[data-test=isbn-field] input';
+  let fixture: ComponentFixture<BookNewComponent>;
+  let loader: HarnessLoader;
 
-  let spectator: Spectator<BookNewComponent>;
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [BookNewComponent],
+      imports: [NoopAnimationsModule, ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatButtonModule],
+      providers: [provideMockStore()]
+    });
 
-  const createComponent = createComponentFactory({
-    component: BookNewComponent,
-    imports: [
-      NoopAnimationsModule,
-      ReactiveFormsModule,
-      MatInputModule,
-      MatFormFieldModule,
-      MatButtonModule,
-      RouterTestingModule,
-      HttpClientTestingModule
-    ]
+    fixture = TestBed.createComponent(BookNewComponent);
+    loader = TestbedHarnessEnvironment.loader(fixture);
+
+    fixture.detectChanges();
   });
-
-  beforeEach(() => (spectator = createComponent()));
 
   describe('When an ISBN has less than 3 characters', () => {
     it('displays an error message', async () => {
-      spectator.typeInElement('12', matInputSelector);
-      spectator.blur(matInputSelector);
+      const isbnFormField = await loader.getHarness(MatFormFieldHarness.with({ selector: '[data-test=isbn-field]' }));
+      const isbnInput = (await isbnFormField.getControl()) as MatInputHarness;
 
-      expect(spectator.queryAll('mat-error')).toContainText('ISBN has to be at least 3 characters long.');
+      await isbnInput.setValue('12');
+      await isbnInput.blur();
+
+      const isbnErrors = await isbnFormField.getTextErrors();
+
+      expect(isbnErrors).toContain('ISBN has to be at least 3 characters long.');
     });
   });
 });
