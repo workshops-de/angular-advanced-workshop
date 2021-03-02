@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Book, BookNa } from '../models';
+import { Book, bookNa } from '../models';
 
 @Component({
   selector: 'ws-book-card',
@@ -7,5 +7,5 @@ import { Book, BookNa } from '../models';
   styleUrls: ['./book-card.component.scss']
 })
 export class BookCardComponent {
-  @Input() content: Book = new BookNa();
+  @Input() content: Book = bookNa();
 }
