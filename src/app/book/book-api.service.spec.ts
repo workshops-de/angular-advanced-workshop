@@ -1,29 +1,20 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
+import { createHttpFactory, HttpMethod, SpectatorHttp } from '@ngneat/spectator';
 import { firstValueFrom } from 'rxjs';
 import { BookApiService } from './book-api.service';
 import { bookNa } from './models';
 
 describe('☁️ BookApi', () => {
-  let httpMock: HttpTestingController;
-  let bookApi: BookApiService;
+  let spectator: SpectatorHttp<BookApiService>;
+  const createHttp = createHttpFactory(BookApiService);
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [BookApiService]
-    });
-
-    httpMock = TestBed.inject(HttpTestingController);
-    bookApi = TestBed.inject(BookApiService);
-  });
+  beforeEach(() => (spectator = createHttp()));
 
   describe('When the API responds with books', () => {
     it('provides books', async () => {
       const books = [bookNa()];
-      const books$ = firstValueFrom(bookApi.getAll());
+      const books$ = firstValueFrom(spectator.service.getAll());
 
-      httpMock.expectOne('http://localhost:4730/books').flush(books);
+      spectator.expectOne('http://localhost:4730/books', HttpMethod.GET).flush(books);
 
       await expectAsync(books$).toBeResolvedTo(books);
     });
@@ -31,9 +22,9 @@ describe('☁️ BookApi', () => {
 
   describe('When there is an Network error', () => {
     it('claims connectivity issues', async () => {
-      const books$ = firstValueFrom(bookApi.getAll());
+      const books$ = firstValueFrom(spectator.service.getAll());
 
-      httpMock.expectOne('http://localhost:4730/books').error(new ProgressEvent('Network error.'));
+      spectator.expectOne('http://localhost:4730/books', HttpMethod.GET).error(new ProgressEvent('Network error'));
 
       await expectAsync(books$).toBeRejectedWithError('Sorry, we have connectivity issues.');
     });
@@ -41,15 +32,13 @@ describe('☁️ BookApi', () => {
 
   describe('When the API responds with an error', () => {
     it('claims API issues', async () => {
-      const books$ = firstValueFrom(bookApi.getAll());
+      const books$ = firstValueFrom(spectator.service.getAll());
 
-      httpMock
-        .expectOne('http://localhost:4730/books')
+      spectator
+        .expectOne('http://localhost:4730/books', HttpMethod.GET)
         .flush('No books', { status: 500, statusText: 'The API hung up' });
 
       await expectAsync(books$).toBeRejectedWithError('Sorry, we could not load any books');
     });
-
-    afterEach(() => httpMock.verify());
   });
 });
