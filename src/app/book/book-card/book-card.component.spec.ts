@@ -1,7 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
-import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { createComponentFactory, Spectator } from '@ngneat/spectator';
 import { Book, bookNa } from '../models';
 import { BookCardComponent } from './book-card.component';
 
@@ -20,41 +19,29 @@ describe('<ws-book-card>', () => {
   });
 
   describe('template', () => {
-    let fixture: ComponentFixture<BookCardComponent>;
+    let spectator: Spectator<BookCardComponent>;
     let book: Book;
+
+    const createComponent = createComponentFactory({
+      component: BookCardComponent,
+      imports: [MatCardModule, RouterTestingModule]
+    });
+
     beforeEach(() => {
-      TestBed.configureTestingModule({
-        declarations: [BookCardComponent],
-        imports: [MatCardModule, RouterTestingModule]
-      });
-
-      fixture = TestBed.createComponent(BookCardComponent);
-      fixture.detectChanges();
-
-      book = {
-        ...bookNa(),
-        title: 'My book'
-      };
+      spectator = createComponent();
+      book = { ...bookNa(), title: 'My book' };
     });
 
     describe('When content is passed', () => {
       it('renders the content', () => {
-        fixture.componentInstance.content = book;
-        fixture.detectChanges();
-
-        const titleFixture = fixture.debugElement.query(By.css('[data-test=book-card-title]'));
-        const titleElement: HTMLElement = titleFixture.nativeElement;
-
-        expect(titleElement.innerHTML).toBe(book.title);
+        spectator.setInput({ content: book });
+        expect(spectator.query('[data-test=book-card-title]')).toContainText(book.title);
       });
     });
 
     describe('When no content is passed', () => {
       it('renders "n/a"', () => {
-        const titleFixture = fixture.debugElement.query(By.css('[data-test=book-card-title]'));
-        const titleElement: HTMLElement = titleFixture.nativeElement;
-
-        expect(titleElement.innerHTML).toBe('n/a');
+        expect(spectator.query('[data-test=book-card-title]')).toContainText('n/a');
       });
     });
   });
