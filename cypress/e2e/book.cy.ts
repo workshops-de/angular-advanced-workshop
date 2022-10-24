@@ -3,8 +3,13 @@ import { FormTest } from './form.po';
 describe('Book Shop', () => {
   const isbn = String(Math.floor(1000000000000 + Math.random() * 900000));
   let bookCount = 0;
+
+  beforeEach(() => {
+    cy.intercept('GET', 'http://localhost:4730/books');
+    cy.visit('');
+  });
+
   it('zeisch Affe', () => {
-    cy.visit('/books');
     cy.get('.mat-toolbar > span').should('contain.text', 'BOOK MONKEY');
     cy.get('.mat-toolbar > span').should('contain', 'BOOK MONKEY');
     cy.get('.mat-toolbar > span').contains('BOOK MONKEY');
@@ -35,8 +40,7 @@ describe('Book Shop', () => {
       });
   });
   after(() => {
-    cy.visit('/');
     // cy.get('ws-book-card').should('have.length', bookCount + 1);
-    cy.request('DELETE', 'http://localhost:4730/books/' + isbn);
+    // cy.request('DELETE', 'http://localhost:4730/books/' + isbn);
   });
 });
