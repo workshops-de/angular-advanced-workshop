@@ -1,9 +1,10 @@
 export class FormTest {
   private idList = ['isbn', 'title', 'author'];
-  private valueList = [String(Math.floor(1000000000000 + Math.random() * 900000)), 'title', 'author'];
+  private valueList;
   private errorList = ['ISBN is required', 'Title is required', 'Author is required'];
 
-  constructor() {
+  constructor(isbn: string) {
+    this.valueList = [isbn, isbn, 'author'];
     cy.visit('/');
   }
 
@@ -29,5 +30,10 @@ export class FormTest {
     cy.get(`[formcontrolname="${id}"]`).type(value);
     cy.get(`[formcontrolname="${id}"]`).should('have.class', 'ng-valid');
     cy.contains(errorMsg).should('not.exist');
+  }
+
+  save(count: number) {
+    cy.get('.mat-raised-button').click();
+    cy.get('ws-book-card').should('have.length', count + 1);
   }
 }
