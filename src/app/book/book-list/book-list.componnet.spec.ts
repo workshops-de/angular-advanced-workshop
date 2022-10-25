@@ -21,12 +21,15 @@ fdescribe('BookListComponent', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [RouterTestingModule, HttpClientTestingModule],
       providers: [
+        BookApiService
         // {
         //   provide: BookApiService,
         //   useValue: bookApiMock
         // }
       ]
     }).compileComponents();
+    service = TestBed.inject(BookApiService);
+    spyOn(service, 'getAll').and.returnValue(of([bookNa(), bookNa()]));
   });
 
   beforeEach(() => {
@@ -34,14 +37,14 @@ fdescribe('BookListComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges(); // <== sync ctrl <==> templ
     view = fixture.nativeElement;
-    service = TestBed.inject(BookApiService);
-    console.log(service);
-    spyOn(service, 'getAll').and.returnValue(of([bookNa(), bookNa()]));
+    // console.log(service);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
     fixture.detectChanges();
+    console.log(view);
+
     expect(view.querySelectorAll('ws-book-card').length).toBe(2);
   });
 });
