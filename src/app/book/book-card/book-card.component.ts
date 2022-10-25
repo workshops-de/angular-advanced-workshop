@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { domain } from 'process';
 import { Book, bookNa } from '../models';
 
 @Component({
@@ -8,4 +9,22 @@ import { Book, bookNa } from '../models';
 })
 export class BookCardComponent {
   @Input() content: Book = bookNa();
+
+  // setValue(value: Book) {
+  //   setTimeout(() => (this.content = value), 1);
+  // }
+
+  // constructor() {
+  //   const start = new Date();
+  //   this.setValue(bookNa());
+  //   const end = new Date();
+  //   dom.update();
+  //   const curration = end - start;
+  // }
 }
+
+// constextStack = [
+//   // setValue(),
+//   // setTimeout,
+//   // contentzuweisung
+// ]
