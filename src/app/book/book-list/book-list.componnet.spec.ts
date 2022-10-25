@@ -7,7 +7,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BookApiService } from '../book-api.service';
 import { bookNa } from '../models/book-na';
 
-fdescribe('BookListComponent', () => {
+describe('BookListComponent', () => {
   let component: BookListComponent;
   let fixture: ComponentFixture<BookListComponent>;
   let view: HTMLElement;
@@ -43,7 +43,7 @@ fdescribe('BookListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
     fixture.detectChanges();
-    console.log(view);
+    // console.log(view);
 
     expect(view.querySelectorAll('ws-book-card').length).toBe(2);
   });
