@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { domain } from 'process';
+import { Title, By } from '@angular/platform-browser';
 import { Book, bookNa } from '../models';
 
 @Component({
@@ -9,6 +9,12 @@ import { Book, bookNa } from '../models';
 })
 export class BookCardComponent {
   @Input() content: Book = bookNa();
+  // btn: HTMLElement;
+
+  constructor(private title: Title) {
+    this.title.setTitle('Foo');
+    // By.
+  }
 
   // setValue(value: Book) {
   //   setTimeout(() => (this.content = value), 1);

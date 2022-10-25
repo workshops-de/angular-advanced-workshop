@@ -11,6 +11,17 @@ export const bookNa: () => Book = () => {
     title: na,
     subtitle: na,
     numPages: 0,
-    publisher: { name: na, url: na }
+    publisher: na
   };
+};
+
+export const mochBookNa = {
+  abstract: 'n/a',
+  author: 'n/a',
+  cover: 'n/a',
+  isbn: 'n/a',
+  title: 'n/a',
+  subtitle: 'n/a',
+  numPages: 0,
+  publisher: 'n/a'
 };
