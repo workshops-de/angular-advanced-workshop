@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
@@ -22,6 +23,19 @@ class SandBoxComponent {
   };
 }
 
+export const importsMock = [RouterTestingModule, HttpClientTestingModule];
+
+export const providersMock = [
+  {
+    provide: Title,
+    useValue: {
+      setTitle: (s: string) => {
+        console.log('====>', s);
+      }
+    }
+  }
+];
+
 describe('BookCardComponent', () => {
   let component: BookCardComponent;
   let fixture: ComponentFixture<BookCardComponent>;
@@ -35,17 +49,8 @@ describe('BookCardComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [BookCardComponent, SandBoxComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [RouterTestingModule],
-      providers: [
-        {
-          provide: Title,
-          useValue: {
-            setTitle: (s: string) => {
-              console.log('====>', s);
-            }
-          }
-        }
-      ]
+      imports: [...importsMock],
+      providers: [...providersMock]
     }).compileComponents();
   });
 
