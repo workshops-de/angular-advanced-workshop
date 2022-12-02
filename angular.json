@@ -167,5 +167,13 @@
       }
     }
   },
-  "defaultProject": "workshop"
+  "defaultProject": "workshop",
+  "schematics": {
+    "@angular-eslint/schematics:application": {
+      "setParserOptionsProject": true
+    },
+    "@angular-eslint/schematics:library": {
+      "setParserOptionsProject": true
+    }
+  }
 }
