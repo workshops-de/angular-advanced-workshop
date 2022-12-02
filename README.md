@@ -22,3 +22,16 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 8. run `./recreate-tags.sh`
 9. `git push -f`
 10. `git push --tags -f`
+
+# Update 13-15
+
+```bash
+npm i @angular/cli@^15.0.0 -g
+
+ng update @angular/cli@14 @angular/core@14
+ng update @angular/material@14
+ng update @angular-eslint/schematics@15
+
+ng update @angular/cli@15 @angular/core@15
+ng update @angular/material@15
+```
