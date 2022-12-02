@@ -27,8 +27,10 @@ type BookForm = IForm<Book>;
   templateUrl: './book-new.component.html'
 })
 export class BookNewComponent implements OnDestroy {
+  title = 'NEW!';
   sink = new Subscription();
   form: FormGroup<IForm<Book>>;
+  authorsform!: FormGroup;
   ctrl = new UntypedFormControl();
   foo: string[] = [];
   authors!: FormArray<FormControl<string | null>>;
@@ -44,7 +46,7 @@ export class BookNewComponent implements OnDestroy {
   }
 
   create() {
-    const book = { ...bookNa(), ...this.form.value };
+    const book = { ...bookNa(), ...this.form.value, author: this.authors.value.join(', ') };
     this.sink.add(
       this.bookService
         .create(book)
@@ -54,7 +56,11 @@ export class BookNewComponent implements OnDestroy {
   }
 
   private buildForm() {
-    this.authors = this.fb.array([] as string[]);
+    this.authors = this.fb.array([''] as string[]);
+
+    this.authorsform = this.fb.group({
+      authors: this.authors
+    });
 
     return this.fb.group({
       isbn: ['', [Validators.required, Validators.minLength(3)]],
@@ -79,5 +85,9 @@ export class BookNewComponent implements OnDestroy {
     //   subtitle: new FormControl(''),
     //   publisher: new FormControl('')
     // });
+  }
+
+  addAuthor() {
+    this.authors.push(new FormControl(''));
   }
 }
