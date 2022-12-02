@@ -7,7 +7,8 @@ import {
   Validators,
   NonNullableFormBuilder,
   FormBuilder,
-  FormGroup
+  FormGroup,
+  FormArray
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -29,10 +30,13 @@ export class BookNewComponent implements OnDestroy {
   sink = new Subscription();
   form: FormGroup<IForm<Book>>;
   ctrl = new UntypedFormControl();
+  foo: string[] = [];
+  authors!: FormArray<FormControl<string | null>>;
 
   constructor(private router: Router, private fb: FormBuilder, private bookService: BookApiService) {
     this.form = this.buildForm();
-    // const b: Book = this.form.getRawValue();
+
+    const b: Book = this.form.getRawValue();
   }
 
   ngOnDestroy() {
@@ -50,10 +54,12 @@ export class BookNewComponent implements OnDestroy {
   }
 
   private buildForm() {
+    this.authors = this.fb.array([] as string[]);
+
     return this.fb.group({
       isbn: ['', [Validators.required, Validators.minLength(3)]],
       title: ['', Validators.required],
-      author: ['', Validators.required],
+      author: [''],
       cover: [''],
       abstract: [''],
       id: [''],
@@ -61,6 +67,7 @@ export class BookNewComponent implements OnDestroy {
       subtitle: [''],
       publisher: ['']
     });
+
     // return new FormGroup({
     //   isbn: new FormControl('', [Validators.required, Validators.minLength(3)]),
     //   title: new FormControl('', Validators.required),
