@@ -29,6 +29,6 @@ export class BookEditComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    this.sink.add(this.bookService.update(this.book.isbn, this.book).subscribe());
+    this.sink.add(this.bookService.update(this.book.isbn as string, this.book).subscribe());
   }
 }
