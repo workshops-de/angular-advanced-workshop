@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -13,10 +13,10 @@ import { bookNa } from '../models';
 })
 export class BookNewComponent implements OnDestroy {
   sink = new Subscription();
-  form: FormGroup;
-  ctrl = new FormControl();
+  form: UntypedFormGroup;
+  ctrl = new UntypedFormControl();
 
-  constructor(private router: Router, private fb: FormBuilder, private bookService: BookApiService) {
+  constructor(private router: Router, private fb: UntypedFormBuilder, private bookService: BookApiService) {
     this.form = this.buildForm();
   }
 
@@ -34,7 +34,7 @@ export class BookNewComponent implements OnDestroy {
     );
   }
 
-  private buildForm(): FormGroup {
+  private buildForm(): UntypedFormGroup {
     return this.fb.group({
       isbn: ['', [Validators.required, Validators.minLength(3)]],
       title: ['', Validators.required],
