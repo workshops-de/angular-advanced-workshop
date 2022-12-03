@@ -4,6 +4,7 @@
     <input matInput formControlName="isbn" placeholder="ISBN" required />
     <mat-error *ngIf="form.get('isbn')?.hasError('minlength')"> ISBN has to be at least 3 characters long. </mat-error>
     <mat-error *ngIf="form.get('isbn')?.hasError('required')"> ISBN is required </mat-error>
+    <mat-error *ngIf="form.get('isbn')?.hasError('isbn')"> {{ form.controls['isbn'].errors?.isbn }}</mat-error>
   </mat-form-field>
 
   <mat-form-field>
@@ -12,7 +13,7 @@
   </mat-form-field>
   <ng-container [formGroup]="authorsform">
     <mat-form-field formArrayName="authors">
-      <span (click)="addAuthor()">➕</span>
+      <h3 (click)="addAuthor()">➕</h3>
       <ng-container *ngFor="let a of authors.controls; let i = index">
         <input border="1" matInput [formControlName]="i" [placeholder]="'Author' + i" required />
         <hr />

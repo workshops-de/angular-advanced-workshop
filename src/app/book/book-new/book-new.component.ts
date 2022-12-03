@@ -8,13 +8,18 @@ import {
   NonNullableFormBuilder,
   FormBuilder,
   FormGroup,
-  FormArray
+  FormArray,
+  ValidatorFn,
+  AbstractControl,
+  ValidationErrors,
+  AsyncValidatorFn
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import { Book, bookNa } from '../models';
+import { isbnAcyncValidator, isbnValidator } from './validators';
 
 export type IForm<T> = {
   [K in keyof T]: FormControl<T[K] | null>; // minus Fragezeichen setzt das value auf optional, key wird required
@@ -63,7 +68,7 @@ export class BookNewComponent implements OnDestroy {
     });
 
     return this.fb.group({
-      isbn: ['', [Validators.required, Validators.minLength(3)]],
+      isbn: ['', [Validators.required, Validators.minLength(13)], [isbnAcyncValidator()]], //isbnValidator
       title: ['', Validators.required],
       author: [''],
       cover: [''],
@@ -73,18 +78,6 @@ export class BookNewComponent implements OnDestroy {
       subtitle: [''],
       publisher: ['']
     });
-
-    // return new FormGroup({
-    //   isbn: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    //   title: new FormControl('', Validators.required),
-    //   author: new FormControl('', Validators.required),
-    //   cover: new FormControl(''),
-    //   abstract: new FormControl(''),
-    //   id: new FormControl(''),
-    //   numPages: new FormControl(0),
-    //   subtitle: new FormControl(''),
-    //   publisher: new FormControl('')
-    // });
   }
 
   addAuthor() {
