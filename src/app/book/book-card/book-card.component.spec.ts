@@ -35,4 +35,12 @@ describe('BookCardComponent', () => {
       publisher: { name: 'n/a', url: 'n/a' }
     });
   });
+  it('should show title and subtitle in template', () => {
+    component.content.title = 'Hurbel Wonz';
+    component.content.subtitle = 'Moin';
+    fixture.detectChanges();
+    const elem = fixture.nativeElement as HTMLElement;
+    expect(elem.querySelector('mat-card-title')?.innerHTML).toBe('Hurbel Wonz');
+    expect(elem.querySelector('mat-card-subtitle')?.innerHTML).toBe('Moin');
+  });
 });
