@@ -18,10 +18,10 @@ export const isbnAcyncValidator = (): AsyncValidatorFn => {
 
   return (control: AbstractControl<string>): Observable<ValidationErrors | null> => {
     console.log('async', control.value);
-    return state.pipe(first());
-    // return service.getByIsbn(control.value).pipe(
-    //   map(() => ({ isbnAsync: 'Book alredy exists' })),
-    //   catchError(() => of(null))
-    // );
+    // return state.pipe(first()); //Observable müssen completen
+    return service.getByIsbn(control.value).pipe(
+      map(() => ({ isbnAsync: 'Book alredy exists' })),
+      catchError(() => of(null))
+    );
   };
 };
