@@ -1,5 +1,9 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+
+import { createComponentFactory, Spectator } from '@ngneat/spectator';
+import { bookNa } from '../models';
 
 import { BookCardComponent } from './book-card.component';
 
@@ -42,5 +46,22 @@ describe('BookCardComponent', () => {
     const elem = fixture.nativeElement as HTMLElement;
     expect(elem.querySelector('mat-card-title')?.innerHTML).toBe('Hurbel Wonz');
     expect(elem.querySelector('mat-card-subtitle')?.innerHTML).toBe('Moin');
+  });
+});
+
+describe('use Spectator', () => {
+  let spectator: Spectator<BookCardComponent>;
+  const book = { ...bookNa(), title: 'MOIN' };
+  const createComponent = createComponentFactory(BookCardComponent);
+  // const createComponent = createComponentFactory({ component: BookCardComponent, imports: [RouterTestingModule] });
+  beforeEach(() => {
+    spectator = createComponent();
+  });
+  it('should show "n/a" with no content', () => {
+    expect(spectator.query('mat-card-title')?.innerHTML).toBe('n/a');
+  });
+  it('should show "MOIN" with content', () => {
+    spectator.setInput('content', book);
+    expect(spectator.query('mat-card-title')?.innerHTML).toBe('MOIN');
   });
 });
