@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { BookApiService } from '../book-api.service';
-import { Book } from '../models';
-import { BookCardComponent } from '../book-card/book-card.component';
 import { AsyncPipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { BookCollectionSlice, bookFeatureName } from '@store/book';
+import { Observable } from 'rxjs';
+import { BookCardComponent } from '../book-card/book-card.component';
+import { Book } from '../models';
 
 @Component({
   selector: 'ws-book-list',
@@ -12,11 +13,13 @@ import { AsyncPipe } from '@angular/common';
   imports: [BookCardComponent, AsyncPipe]
 })
 export class BookListComponent {
-  private readonly bookService = inject(BookApiService);
+  private readonly store = inject<Store<{ [bookFeatureName]: { bookCollection: BookCollectionSlice } }>>(Store);
+  protected books$: Observable<ReadonlyArray<Book>>;
 
-  protected books$: Observable<Book[]>;
-
+  // TODO: The typing of Store<T> is temporary and wont be needed after we
+  //       have introduced selectors.
+  // TODO: ESLint will complain about prop-drilling here, but we will fix that later.
   constructor() {
-    this.books$ = this.bookService.getAll();
+    this.books$ = this.store.select(state => state[bookFeatureName].bookCollection.entities);
   }
 }
