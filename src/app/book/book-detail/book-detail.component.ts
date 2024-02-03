@@ -1,8 +1,6 @@
-import { Component, DestroyRef, Input } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { filter, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { BookApiService } from '../book-api.service';
 import { Book } from '../models';
 import { MatButton } from '@angular/material/button';
 import {
@@ -16,9 +14,8 @@ import {
   MatCardTitle
 } from '@angular/material/card';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
-import { selectBookByIsbn } from '@store/book';
+import { deleteBookStart, selectBookByIsbn } from '@store/book';
 
 @Component({
   selector: 'ws-book-detail',
@@ -44,12 +41,7 @@ export class BookDetailComponent {
   protected book$?: Observable<Book>;
   private isbnValue = '';
 
-  constructor(
-    private readonly router: Router,
-    private readonly bookService: BookApiService,
-    private readonly destroyRef: DestroyRef,
-    private readonly store: Store
-  ) {}
+  constructor(private readonly store: Store) {}
 
   @Input({ required: true })
   set isbn(isbn: string) {
@@ -58,12 +50,6 @@ export class BookDetailComponent {
   }
 
   remove() {
-    this.bookService
-      .delete(this.isbnValue)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        tap(() => this.router.navigateByUrl('/'))
-      )
-      .subscribe();
+    this.store.dispatch(deleteBookStart({ bookIsbn: this.isbnValue }));
   }
 }

@@ -1,17 +1,15 @@
-import { Component, DestroyRef, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { EMPTY, filter, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { BookApiService } from '../book-api.service';
 import { Book } from '../models';
 import { MatButton } from '@angular/material/button';
 import { MatInput, MatLabel } from '@angular/material/input';
 import { MatError, MatFormField } from '@angular/material/form-field';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
-import { selectBookByIsbn } from '@store/book';
+import { selectBookByIsbn, updateBookStart } from '@store/book';
 
 @Component({
   selector: 'ws-book-edit',
@@ -35,8 +33,6 @@ export class BookEditComponent {
 
   constructor(
     private readonly formBuilder: FormBuilder,
-    private readonly bookService: BookApiService,
-    private readonly destroyRef: DestroyRef,
     private readonly store: Store
   ) {}
 
@@ -59,9 +55,6 @@ export class BookEditComponent {
   }
 
   save() {
-    this.bookService
-      .update(this.isbnValue, this.form.getRawValue())
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
+    this.store.dispatch(updateBookStart({ patch: this.form.getRawValue() as Book }));
   }
 }
