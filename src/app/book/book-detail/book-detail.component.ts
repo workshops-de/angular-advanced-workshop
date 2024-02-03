@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { filter, Observable } from 'rxjs';
 import { Book } from '../models';
@@ -37,19 +37,16 @@ import { deleteBookStart, selectBookByIsbn } from '@store/book';
     AsyncPipe
   ]
 })
-export class BookDetailComponent {
+export class BookDetailComponent implements OnInit {
   protected book$?: Observable<Book>;
-  private isbnValue = '';
 
   constructor(private readonly store: Store) {}
 
-  @Input({ required: true })
-  set isbn(isbn: string) {
-    this.book$ = this.store.select(selectBookByIsbn(isbn)).pipe(filter((book): book is Book => !!book));
-    this.isbnValue = isbn;
+  ngOnInit(): void {
+    this.book$ = this.store.select(selectBookByIsbn).pipe(filter((book): book is Book => !!book));
   }
 
   remove() {
-    this.store.dispatch(deleteBookStart({ bookIsbn: this.isbnValue }));
+    this.store.dispatch(deleteBookStart());
   }
 }

@@ -1,5 +1,5 @@
 <h2 class="mat-h2">Edit</h2>
-<ng-container *ngIf="book$ | async">
+<ng-container *ngIf="book$ | async as book">
   <form [formGroup]="form" (ngSubmit)="save()" class="book-edit__form">
     <mat-form-field>
       <mat-label>ISBN</mat-label>
@@ -29,7 +29,7 @@
     </mat-form-field>
 
     <div class="form-actions">
-      <button mat-button [routerLink]="['/books', isbnValue]">Cancel</button>
+      <button mat-button [routerLink]="['/books', book.isbn]">Cancel</button>
       <button mat-raised-button color="primary" [disabled]="!form.valid" type="submit">Save</button>
     </div>
   </form>

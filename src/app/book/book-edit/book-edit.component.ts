@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { EMPTY, filter, Observable } from 'rxjs';
+import { filter, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Book } from '../models';
 import { MatButton } from '@angular/material/button';
@@ -18,9 +18,8 @@ import { selectBookByIsbn, updateBookStart } from '@store/book';
   standalone: true,
   imports: [NgIf, ReactiveFormsModule, MatFormField, MatInput, MatLabel, MatError, MatButton, RouterLink, AsyncPipe]
 })
-export class BookEditComponent {
-  protected book$: Observable<Book> = EMPTY;
-  protected isbnValue = '';
+export class BookEditComponent implements OnInit {
+  protected book$?: Observable<Book>;
 
   protected form = this.formBuilder.nonNullable.group({
     title: ['', [Validators.required]],
@@ -36,9 +35,8 @@ export class BookEditComponent {
     private readonly store: Store
   ) {}
 
-  @Input({ required: true })
-  set isbn(isbn: string) {
-    this.book$ = this.store.select(selectBookByIsbn(isbn)).pipe(
+  ngOnInit(): void {
+    this.book$ = this.store.select(selectBookByIsbn).pipe(
       filter((book): book is Book => !!book),
       tap(book => {
         this.form.setValue({
@@ -51,7 +49,6 @@ export class BookEditComponent {
         });
       })
     );
-    this.isbnValue = isbn;
   }
 
   save() {

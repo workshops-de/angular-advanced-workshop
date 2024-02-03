@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { concatMap, exhaustMap, map, switchMap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import {
@@ -13,6 +13,8 @@ import {
   updateBookComplete,
   updateBookStart
 } from './book-collection.actions';
+import { selectRouteParam } from '@store/router';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class BookCollectionEffects {
@@ -35,7 +37,11 @@ export class BookCollectionEffects {
   delete = createEffect(() => {
     return this.actions$.pipe(
       ofType(deleteBookStart),
-      exhaustMap(({ bookIsbn }) => this.bookApi.delete(bookIsbn).pipe(map(() => deleteBookComplete({ bookIsbn }))))
+      concatLatestFrom(() => this.store.select(selectRouteParam('isbn'))),
+      exhaustMap(([, isbn]) => {
+        const bookIsbn = isbn!;
+        return this.bookApi.delete(bookIsbn).pipe(map(() => deleteBookComplete({ bookIsbn })));
+      })
     );
   });
 
@@ -61,6 +67,7 @@ export class BookCollectionEffects {
   constructor(
     private readonly actions$: Actions,
     private readonly bookApi: BookApiService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly store: Store
   ) {}
 }
