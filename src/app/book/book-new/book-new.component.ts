@@ -9,6 +9,8 @@ import { NgIf } from '@angular/common';
 import { MatInput, MatLabel } from '@angular/material/input';
 import { MatError, MatFormField } from '@angular/material/form-field';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Store } from '@ngrx/store';
+import { createBookStart } from '@store/book';
 
 @Component({
   selector: 'ws-book-new',
@@ -31,7 +33,8 @@ export class BookNewComponent {
     private readonly formBuilder: FormBuilder,
     private readonly router: Router,
     private readonly bookService: BookApiService,
-    private readonly destroyRef: DestroyRef
+    private readonly destroyRef: DestroyRef,
+    private readonly store: Store
   ) {}
 
   create() {
@@ -43,5 +46,7 @@ export class BookNewComponent {
         tap(() => this.router.navigateByUrl('/'))
       )
       .subscribe();
+
+    this.store.dispatch(createBookStart({ book }));
   }
 }
