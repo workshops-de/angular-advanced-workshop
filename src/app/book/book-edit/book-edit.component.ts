@@ -1,13 +1,13 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
-import { MatError, MatFormField } from '@angular/material/form-field';
-import { MatInput, MatLabel } from '@angular/material/input';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectBookByIsbn, updateBookStart } from '@store/book';
-import { EMPTY, filter, Observable } from 'rxjs';
+import { filter, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Book } from '../models';
 
@@ -17,12 +17,11 @@ import { Book } from '../models';
   styleUrls: ['./book-edit.component.scss'],
   imports: [ReactiveFormsModule, MatFormField, MatInput, MatLabel, MatError, MatButton, RouterLink, AsyncPipe]
 })
-export class BookEditComponent {
-  private readonly formBuilder = inject(FormBuilder);
+export class BookEditComponent implements OnInit {
   private readonly store = inject(Store);
+  private readonly formBuilder = inject(FormBuilder);
 
-  protected book$: Observable<Book> = EMPTY;
-  protected isbnValue = '';
+  protected book$?: Observable<Book>;
 
   protected form = this.formBuilder.nonNullable.group({
     title: ['', [Validators.required]],
@@ -33,14 +32,12 @@ export class BookEditComponent {
     cover: ['']
   });
 
-  isbn = input.required<string>();
-
-  constructor() {
-    effect(() => this.loadBookByIsbn(this.isbn()));
+  ngOnInit() {
+    this.loadBookByIsbn();
   }
 
-  private loadBookByIsbn(isbn: string) {
-    this.book$ = this.store.select(selectBookByIsbn(isbn)).pipe(
+  private loadBookByIsbn() {
+    this.book$ = this.store.select(selectBookByIsbn).pipe(
       filter(book => !!book),
       tap(book => this.fillForm(book))
     );

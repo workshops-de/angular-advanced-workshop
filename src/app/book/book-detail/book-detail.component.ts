@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import {
   MatCard,
@@ -35,22 +35,16 @@ import { Book } from '../models';
     AsyncPipe
   ]
 })
-export class BookDetailComponent {
+export class BookDetailComponent implements OnInit {
   private readonly store = inject(Store);
 
   protected book$?: Observable<Book>;
 
-  isbn = input.required<string>();
-
-  constructor() {
-    effect(() => this.loadBookByIsbn(this.isbn()));
+  ngOnInit(): void {
+    this.book$ = this.store.select(selectBookByIsbn).pipe(filter((book): book is Book => !!book));
   }
 
   remove() {
-    this.store.dispatch(deleteBookStart({ bookIsbn: this.isbn() }));
-  }
-
-  private loadBookByIsbn(isbn: string) {
-    this.book$ = this.store.select(selectBookByIsbn(isbn)).pipe(filter(book => !!book));
+    this.store.dispatch(deleteBookStart());
   }
 }

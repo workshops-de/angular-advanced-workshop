@@ -21,7 +21,8 @@
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
     "paths": {
-      "@store/book": ["./src/app/book/store/index"]
+      "@store/book": ["./src/app/book/store/index"],
+      "@store/router": ["./src/app/store/router/index"]
     }
   },
   "angularCompilerOptions": {
