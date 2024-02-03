@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs';
-import { BookApiService } from '../book-api.service';
 import { Book, bookNa } from '../models';
 import { BookListComponent } from './book-list.component';
 import { BookCardComponent } from '../book-card/book-card.component';
 import { Component, Input } from '@angular/core';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { selectBookCollection } from '@store/book';
 
 describe('<ws-book-list>', () => {
   let fixture: ComponentFixture<BookListComponent>;
-  let bookApiMock: jasmine.SpyObj<BookApiService>;
+  let store: MockStore;
 
   @Component({
     selector: 'ws-book-card',
@@ -21,26 +21,21 @@ describe('<ws-book-list>', () => {
   }
 
   beforeEach(() => {
-    bookApiMock = jasmine.createSpyObj<BookApiService>(['getAll']);
-
     TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: BookApiService,
-          useValue: bookApiMock
-        }
-      ],
+      providers: [provideMockStore()],
       imports: [BookListComponent]
     }).overrideComponent(BookListComponent, {
       remove: { imports: [BookCardComponent] },
       add: { imports: [BookCardMockComponent] }
     });
+
+    store = TestBed.inject(MockStore);
   });
 
   describe('When books provided', () => {
     it('renders a list of books', () => {
       const books = [bookNa(), bookNa()];
-      bookApiMock.getAll.and.returnValue(of(books));
+      store.overrideSelector(selectBookCollection, books);
 
       fixture = TestBed.createComponent(BookListComponent);
       fixture.detectChanges();
