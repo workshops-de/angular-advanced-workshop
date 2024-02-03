@@ -3,7 +3,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { createComponentFactory, Spectator } from '@ngneat/spectator';
-import { provideStore } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 import { BookNewComponent } from './book-new.component';
 
 describe('<ws-book-new>', () => {
@@ -18,7 +18,7 @@ describe('<ws-book-new>', () => {
       provideHttpClient(),
       provideHttpClientTesting(),
       provideRouter([]),
-      provideStore()
+      provideMockStore()
     ]
   });
 

@@ -1,18 +1,14 @@
 import { Component, input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideEffects } from '@ngrx/effects';
-import { provideState, provideStore, Store } from '@ngrx/store';
-import { BookCollectionEffects, bookFeatureName, bookReducers, loadBooksStart } from '@store/book';
-import { of } from 'rxjs';
-import { BookApiService } from '../book-api.service';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { loadBooksStart, selectBookCollection } from '@store/book';
 import { BookCardComponent } from '../book-card/book-card.component';
 import { Book, bookNa } from '../models';
 import { BookListComponent } from './book-list.component';
 
 describe('<ws-book-list>', () => {
   let fixture: ComponentFixture<BookListComponent>;
-  let bookApiMock: jasmine.SpyObj<BookApiService>;
 
   @Component({
     selector: 'ws-book-card',
@@ -23,18 +19,8 @@ describe('<ws-book-list>', () => {
   }
 
   beforeEach(() => {
-    bookApiMock = jasmine.createSpyObj<BookApiService>(['getAll']);
-
     TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: BookApiService,
-          useValue: bookApiMock
-        },
-        provideStore(),
-        provideState(bookFeatureName, bookReducers),
-        provideEffects([BookCollectionEffects])
-      ],
+      providers: [provideMockStore()],
       imports: [BookListComponent]
     }).overrideComponent(BookListComponent, {
       remove: { imports: [BookCardComponent] },
@@ -44,13 +30,14 @@ describe('<ws-book-list>', () => {
 
   describe('When books provided', () => {
     it('renders a list of books', () => {
-      const books = [bookNa(), { ...bookNa(), isbn: '1234567890', title: 'Test Book' }];
-      bookApiMock.getAll.and.returnValue(of(books));
+      const books = [bookNa(), bookNa()];
+      const store = TestBed.inject(MockStore);
+
+      store.overrideSelector(selectBookCollection, books);
 
       fixture = TestBed.createComponent(BookListComponent);
       fixture.detectChanges();
 
-      const store = TestBed.inject(Store);
       store.dispatch(loadBooksStart());
       fixture.detectChanges();
 
