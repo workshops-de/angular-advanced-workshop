@@ -4,9 +4,12 @@ import { BookDetailComponent } from './book-detail/book-detail.component';
 import { BookNewComponent } from './book-new/book-new.component';
 import { BookListComponent } from './book-list/book-list.component';
 import { BookEditComponent } from './book-edit/book-edit.component';
+import { provideState } from '@ngrx/store';
+import { bookCollectionReducer, bookFeatureName } from '@store/book';
 
 export const bookRoutes: Routes = [
   {
+    providers: [provideState(bookFeatureName, { bookCollection: bookCollectionReducer })],
     path: '',
     component: BookComponent,
     children: [
