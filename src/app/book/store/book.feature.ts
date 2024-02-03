@@ -1,6 +1,15 @@
-import { createFeatureSelector } from '@ngrx/store';
+import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
 import { BookCollectionSlice } from './book-collection.slice';
+import { bookCollectionReducer } from './book-collection.reducer';
 
 export const bookFeatureName = 'book';
 
-export const selectBookFeature = createFeatureSelector<{ bookCollection: BookCollectionSlice }>(bookFeatureName);
+export interface BookState {
+  bookCollection: BookCollectionSlice;
+}
+
+export const bookReducers: ActionReducerMap<BookState> = {
+  bookCollection: bookCollectionReducer
+};
+
+export const selectBookFeature = createFeatureSelector<BookState>(bookFeatureName);
