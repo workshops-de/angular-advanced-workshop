@@ -1,8 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { Book, bookNa } from '../models';
 import { BookCardComponent } from './book-card.component';
 import { provideRouter } from '@angular/router';
+import { createComponentFactory, Spectator } from '@ngneat/spectator';
 
 describe('<ws-book-card>', () => {
   describe('unit', () => {
@@ -19,41 +18,29 @@ describe('<ws-book-card>', () => {
   });
 
   describe('template', () => {
-    let fixture: ComponentFixture<BookCardComponent>;
+    let spectator: Spectator<BookCardComponent>;
     let book: Book;
+
+    const createComponent = createComponentFactory({
+      component: BookCardComponent,
+      providers: [provideRouter([])]
+    });
+
     beforeEach(() => {
-      TestBed.configureTestingModule({
-        imports: [BookCardComponent],
-        providers: [provideRouter([])]
-      });
-
-      fixture = TestBed.createComponent(BookCardComponent);
-      fixture.detectChanges();
-
-      book = {
-        ...bookNa(),
-        title: 'My book'
-      };
+      spectator = createComponent();
+      book = { ...bookNa(), title: 'My book' };
     });
 
     describe('When content is passed', () => {
       it('renders the content', () => {
-        fixture.componentRef.setInput('content', book);
-        fixture.detectChanges();
-
-        const titleFixture = fixture.debugElement.query(By.css('mat-card-title'));
-        const titleElement: HTMLElement = titleFixture.nativeElement;
-
-        expect(titleElement.innerHTML).toBe(book.title);
+        spectator.setInput({ content: book });
+        expect(spectator.query('mat-card-title')).toContainText(book.title);
       });
     });
 
     describe('When no content is passed', () => {
       it('renders "n/a"', () => {
-        const titleFixture = fixture.debugElement.query(By.css('mat-card-title'));
-        const titleElement: HTMLElement = titleFixture.nativeElement;
-
-        expect(titleElement.innerHTML).toBe('n/a');
+        expect(spectator.query('mat-card-title')).toContainText('n/a');
       });
     });
   });
