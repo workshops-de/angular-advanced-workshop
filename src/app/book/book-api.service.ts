@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Book } from './models';
 
 @Injectable({ providedIn: 'root' })
@@ -10,7 +11,15 @@ export class BookApiService {
   private readonly endpoint = 'http://localhost:4730/books';
 
   getAll(): Observable<Book[]> {
-    return this.http.get<Book[]>(`${this.endpoint}`);
+    return this.http
+      .get<Book[]>(`${this.endpoint}`)
+      .pipe(
+        catchError((err: HttpErrorResponse) =>
+          err.status === 500
+            ? throwError(() => new Error('Sorry, we could not load any books'))
+            : throwError(() => new Error('Sorry, we have connectivity issues.'))
+        )
+      );
   }
 
   getByIsbn(isbn: string): Observable<Book> {
