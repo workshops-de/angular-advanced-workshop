@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { BookCollectionSlice, bookFeatureName } from '@store/book';
 import { Observable } from 'rxjs';
-import { BookApiService } from '../book-api.service';
 import { Book } from '../models';
 import { BookCardComponent } from '../book-card/book-card.component';
 import { AsyncPipe, NgFor } from '@angular/common';
@@ -13,9 +14,11 @@ import { AsyncPipe, NgFor } from '@angular/common';
   imports: [NgFor, BookCardComponent, AsyncPipe]
 })
 export class BookListComponent {
-  protected books$: Observable<Book[]>;
+  protected books$: Observable<ReadonlyArray<Book>>;
 
-  constructor(private readonly bookService: BookApiService) {
-    this.books$ = this.bookService.getAll();
+  // TODO: The typing of Store<T> is temporary and wont be needed after we
+  //       have introduced selectors.
+  constructor(private readonly store: Store<{ [bookFeatureName]: { bookCollection: BookCollectionSlice } }>) {
+    this.books$ = this.store.select(state => state[bookFeatureName].bookCollection.entities);
   }
 }
