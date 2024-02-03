@@ -13,8 +13,10 @@ import {
   MatCardTitle
 } from '@angular/material/card';
 import { Router, RouterLink } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { selectBookByIsbn } from '@store/book';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import { Book } from '../models';
 
@@ -38,6 +40,7 @@ import { Book } from '../models';
 })
 export class BookDetailComponent {
   private readonly router = inject(Router);
+  private readonly store = inject(Store);
   private readonly bookService = inject(BookApiService);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -60,6 +63,6 @@ export class BookDetailComponent {
   }
 
   private loadBookByIsbn(isbn: string) {
-    this.book$ = this.bookService.getByIsbn(isbn);
+    this.book$ = this.store.select(selectBookByIsbn(isbn)).pipe(filter(book => !!book));
   }
 }
