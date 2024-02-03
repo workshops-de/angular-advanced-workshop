@@ -5,9 +5,9 @@ import { Book } from './models';
 
 @Injectable({ providedIn: 'root' })
 export class BookApiService {
-  private endpoint = 'http://localhost:4730/books';
+  private readonly endpoint = 'http://localhost:4730/books';
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   getAll(): Observable<Book[]> {
     return this.http.get<Book[]>(`${this.endpoint}`);

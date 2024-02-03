@@ -7,8 +7,6 @@ export interface Book {
   abstract: string;
   numPages: number;
   author: string;
-  publisher: {
-    name: string;
-    url: string;
-  };
+  publisher: string;
+  price: number;
 }

@@ -1,26 +1,64 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, DestroyRef, Input } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
-import { exhaustMap, switchMap, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import { Book } from '../models';
+import { MatButton } from '@angular/material/button';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardAvatar,
+  MatCardContent,
+  MatCardHeader,
+  MatCardImage,
+  MatCardSubtitle,
+  MatCardTitle
+} from '@angular/material/card';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'ws-book-detail',
   styleUrls: ['./book-detail.component.scss'],
-  templateUrl: 'book-detail.component.html'
+  templateUrl: 'book-detail.component.html',
+  standalone: true,
+  imports: [
+    NgIf,
+    MatCard,
+    MatCardHeader,
+    MatCardAvatar,
+    MatCardTitle,
+    MatCardSubtitle,
+    MatCardImage,
+    MatCardContent,
+    MatCardActions,
+    MatButton,
+    RouterLink,
+    AsyncPipe
+  ]
 })
 export class BookDetailComponent {
-  public book$: Observable<Book>;
+  protected book$?: Observable<Book>;
+  private isbnValue = '';
 
-  constructor(private router: Router, private route: ActivatedRoute, private bookService: BookApiService) {
-    this.book$ = this.route.params.pipe(switchMap(params => this.bookService.getByIsbn(params.isbn)));
+  constructor(
+    private readonly router: Router,
+    private readonly bookService: BookApiService,
+    private readonly destroyRef: DestroyRef
+  ) {}
+
+  @Input({ required: true })
+  set isbn(isbn: string) {
+    this.book$ = this.bookService.getByIsbn(isbn);
+    this.isbnValue = isbn;
   }
 
   remove() {
-    this.route.params
+    this.bookService
+      .delete(this.isbnValue)
       .pipe(
-        exhaustMap(params => this.bookService.delete(params.isbn)),
+        takeUntilDestroyed(this.destroyRef),
         tap(() => this.router.navigateByUrl('/'))
       )
       .subscribe();
