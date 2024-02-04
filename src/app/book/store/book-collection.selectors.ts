@@ -1,8 +1,8 @@
-import { createSelector } from '@ngrx/store';
-import { selectBookFeature } from './book.feature';
 import { createEntityAdapter } from '@ngrx/entity';
-import { Book } from '../models';
+import { createSelector } from '@ngrx/store';
 import { selectRouteParam } from '@store/router';
+import { Book } from '../models';
+import { selectBookFeature } from './book.feature';
 
 const adapter = createEntityAdapter<Book>();
 

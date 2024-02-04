@@ -1,4 +1,6 @@
+import { createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
+import { Book } from '../models';
 import {
   createBookComplete,
   deleteBookComplete,
@@ -6,8 +8,6 @@ import {
   updateBookComplete
 } from './book-collection.actions';
 import { BookCollectionSlice } from './book-collection.slice';
-import { createEntityAdapter } from '@ngrx/entity';
-import { Book } from '../models';
 
 const adapter = createEntityAdapter<Book>({ selectId: model => model.isbn });
 
