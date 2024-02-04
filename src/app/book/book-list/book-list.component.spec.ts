@@ -9,6 +9,7 @@ import { BookListComponent } from './book-list.component';
 
 describe('<ws-book-list>', () => {
   let fixture: ComponentFixture<BookListComponent>;
+  let store: MockStore;
 
   @Component({
     selector: 'ws-book-card',
@@ -26,12 +27,25 @@ describe('<ws-book-list>', () => {
       remove: { imports: [BookCardComponent] },
       add: { imports: [BookCardMockComponent] }
     });
+
+    store = TestBed.inject(MockStore);
+  });
+
+  afterEach(() => {
+    /**
+     *
+     * Important!
+     *
+     * If you forget to reset the selectors, that will impact other tests.
+     * This is hard to debug, because the selectors are not reset automatically.
+     *
+     */
+    store?.resetSelectors();
   });
 
   describe('When books provided', () => {
     it('renders a list of books', () => {
       const books = [bookNa(), bookNa()];
-      const store = TestBed.inject(MockStore);
 
       store.overrideSelector(selectBookCollection, books);
 
