@@ -1,9 +1,10 @@
+import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { BookNewComponent } from './book-new.component';
-import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { createComponentFactory, Spectator } from '@ngneat/spectator';
+import { provideStore } from '@ngrx/store';
+import { BookNewComponent } from './book-new.component';
 
 describe('<ws-book-new>', () => {
   const matInputSelector = 'input[formControlName="isbn"]';
@@ -12,7 +13,13 @@ describe('<ws-book-new>', () => {
 
   const createComponent = createComponentFactory({
     component: BookNewComponent,
-    providers: [provideNoopAnimations(), provideHttpClient(), provideHttpClientTesting(), provideRouter([])]
+    providers: [
+      provideNoopAnimations(),
+      provideHttpClient(),
+      provideHttpClientTesting(),
+      provideRouter([]),
+      provideStore()
+    ]
   });
 
   beforeEach(() => (spectator = createComponent()));

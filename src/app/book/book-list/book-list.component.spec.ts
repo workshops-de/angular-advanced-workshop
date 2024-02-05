@@ -1,6 +1,9 @@
 import { Component, input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { provideEffects } from '@ngrx/effects';
+import { provideState, provideStore, Store } from '@ngrx/store';
+import { BookCollectionEffects, bookFeatureName, bookReducers, loadBooksStart } from '@store/book';
 import { of } from 'rxjs';
 import { BookApiService } from '../book-api.service';
 import { BookCardComponent } from '../book-card/book-card.component';
@@ -27,7 +30,10 @@ describe('<ws-book-list>', () => {
         {
           provide: BookApiService,
           useValue: bookApiMock
-        }
+        },
+        provideStore(),
+        provideState(bookFeatureName, bookReducers),
+        provideEffects([BookCollectionEffects])
       ],
       imports: [BookListComponent]
     }).overrideComponent(BookListComponent, {
@@ -38,10 +44,14 @@ describe('<ws-book-list>', () => {
 
   describe('When books provided', () => {
     it('renders a list of books', () => {
-      const books = [bookNa(), bookNa()];
+      const books = [bookNa(), { ...bookNa(), isbn: '1234567890', title: 'Test Book' }];
       bookApiMock.getAll.and.returnValue(of(books));
 
       fixture = TestBed.createComponent(BookListComponent);
+      fixture.detectChanges();
+
+      const store = TestBed.inject(Store);
+      store.dispatch(loadBooksStart());
       fixture.detectChanges();
 
       const bookCardDebugElements = fixture.debugElement.queryAll(By.css('ws-book-card'));

@@ -6,33 +6,22 @@ import {
   updateBookComplete
 } from './book-collection.actions';
 import { BookCollectionSlice } from './book-collection.slice';
+import { createEntityAdapter } from '@ngrx/entity';
+import { Book } from '../models';
 
-const initial: BookCollectionSlice = {
-  entities: []
-};
+const adapter = createEntityAdapter<Book>({ selectId: model => model.isbn });
 
 export const bookCollectionReducer = createReducer(
-  initial,
-  on(
-    createBookComplete,
-    (slice, { book }): BookCollectionSlice => ({
-      ...slice,
-      entities: [...slice.entities, book]
-    })
-  ),
-  on(
-    deleteBookComplete,
-    (slice, { bookIsbn }): BookCollectionSlice => ({
-      ...slice,
-      entities: slice.entities.filter(book => book.isbn !== bookIsbn)
-    })
-  ),
-  on(loadBooksComplete, (slice, { books }): BookCollectionSlice => ({ ...slice, entities: books })),
+  adapter.getInitialState(),
+
+  on(createBookComplete, (slice, { book }): BookCollectionSlice => adapter.addOne(book, slice)),
+
+  on(deleteBookComplete, (slice, { bookIsbn }): BookCollectionSlice => adapter.removeOne(bookIsbn, slice)),
+
+  on(loadBooksComplete, (slice, { books }): BookCollectionSlice => adapter.setAll(books, slice)),
+
   on(
     updateBookComplete,
-    (slice, { update }): BookCollectionSlice => ({
-      ...slice,
-      entities: slice.entities.map(book => (book.isbn === update.isbn ? update : book))
-    })
+    (slice, { update }): BookCollectionSlice => adapter.updateOne({ id: update.isbn, changes: update }, slice)
   )
 );
