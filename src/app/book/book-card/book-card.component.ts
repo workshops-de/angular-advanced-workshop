@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Book, bookNa } from '../models';
 import { RouterLink } from '@angular/router';
 import { MatButton } from '@angular/material/button';
@@ -29,5 +29,5 @@ import {
     ]
 })
 export class BookCardComponent {
-  @Input() content: Book = bookNa();
+  readonly content = input<Book>(bookNa());
 }

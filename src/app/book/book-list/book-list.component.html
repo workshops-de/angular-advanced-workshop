@@ -2,6 +2,6 @@
 
 <div class="books-grid">
   @for (book of books$ | async; track book) {
-    <ws-book-card [content]="book"></ws-book-card>
+    <ws-book-card [content]="book" />
   }
 </div>

@@ -1,4 +1,4 @@
-import { Component, DestroyRef } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { tap } from 'rxjs/operators';
@@ -17,6 +17,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     imports: [ReactiveFormsModule, MatFormField, MatInput, MatError, MatButton, RouterLink, MatLabel]
 })
 export class BookNewComponent {
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly bookService = inject(BookApiService);
+  private readonly destroyRef = inject(DestroyRef);
+
   protected form = this.formBuilder.nonNullable.group({
     title: ['', [Validators.required]],
     subtitle: [''],
@@ -25,13 +30,6 @@ export class BookNewComponent {
     isbn: ['', [Validators.required, Validators.minLength(3)]],
     cover: ['']
   });
-
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    private readonly router: Router,
-    private readonly bookService: BookApiService,
-    private readonly destroyRef: DestroyRef
-  ) {}
 
   create() {
     const book = { ...bookNa(), ...this.form.getRawValue() };

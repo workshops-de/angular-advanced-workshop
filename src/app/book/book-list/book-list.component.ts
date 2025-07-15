@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BookApiService } from '../book-api.service';
 import { Book } from '../models';
@@ -12,9 +12,11 @@ import { AsyncPipe } from '@angular/common';
     imports: [BookCardComponent, AsyncPipe]
 })
 export class BookListComponent {
+  private readonly bookService = inject(BookApiService);
+
   protected books$: Observable<Book[]>;
 
-  constructor(private readonly bookService: BookApiService) {
+  constructor() {
     this.books$ = this.bookService.getAll();
   }
 }

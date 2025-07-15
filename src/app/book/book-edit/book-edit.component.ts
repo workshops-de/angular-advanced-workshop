@@ -1,23 +1,27 @@
-import { Component, DestroyRef, Input } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { Component, DestroyRef, effect, inject, input } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatError, MatFormField } from '@angular/material/form-field';
+import { MatInput, MatLabel } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { EMPTY, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import { Book } from '../models';
-import { MatButton } from '@angular/material/button';
-import { MatInput, MatLabel } from '@angular/material/input';
-import { MatError, MatFormField } from '@angular/material/form-field';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AsyncPipe } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-    selector: 'ws-book-edit',
-    templateUrl: './book-edit.component.html',
-    styleUrls: ['./book-edit.component.scss'],
-    imports: [ReactiveFormsModule, MatFormField, MatInput, MatLabel, MatError, MatButton, RouterLink, AsyncPipe]
+  selector: 'ws-book-edit',
+  templateUrl: './book-edit.component.html',
+  styleUrls: ['./book-edit.component.scss'],
+  imports: [ReactiveFormsModule, MatFormField, MatInput, MatLabel, MatError, MatButton, RouterLink, AsyncPipe]
 })
 export class BookEditComponent {
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly bookService = inject(BookApiService);
+  private readonly destroyRef = inject(DestroyRef);
+
   protected book$: Observable<Book> = EMPTY;
   protected isbnValue = '';
 
@@ -30,33 +34,28 @@ export class BookEditComponent {
     cover: ['']
   });
 
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    private readonly bookService: BookApiService,
-    private readonly destroyRef: DestroyRef
-  ) {}
+  isbn = input.required<string>();
 
-  @Input({ required: true })
-  set isbn(isbn: string) {
-    this.book$ = this.bookService.getByIsbn(isbn).pipe(
-      tap(book => {
-        this.form.setValue({
-          title: book.title,
-          subtitle: book.subtitle,
-          author: book.author,
-          abstract: book.abstract,
-          isbn: book.isbn,
-          cover: book.cover
-        });
-      })
-    );
-    this.isbnValue = isbn;
+  constructor() {
+    effect(() => this.loadBookByIsbn(this.isbn()));
+  }
+
+  private loadBookByIsbn(isbn: string) {
+    this.book$ = this.bookService.getByIsbn(isbn).pipe(tap(book => this.fillForm(book)));
+  }
+
+  private fillForm(book: Book) {
+    this.form.setValue({
+      title: book.title,
+      subtitle: book.subtitle,
+      author: book.author,
+      abstract: book.abstract,
+      isbn: book.isbn,
+      cover: book.cover
+    });
   }
 
   save() {
-    this.bookService
-      .update(this.isbnValue, this.form.getRawValue())
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
+    this.bookService.update(this.isbn(), this.form.getRawValue()).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 }

@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { MatIcon } from '@angular/material/icon';
@@ -28,10 +28,10 @@ import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/mat
 ]
 })
 export class MainNavigationComponent {
+  private readonly breakpointObserver = inject(BreakpointObserver);
+
   protected isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(result => result.matches),
     shareReplay()
   );
-
-  constructor(private readonly breakpointObserver: BreakpointObserver) {}
 }
