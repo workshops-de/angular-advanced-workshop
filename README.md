@@ -1,24 +1,35 @@
-# Workshops.DE
+<h1 align="center">Angular Advanced Intensive Workshop</h1>
 
-This project is a reference implementation for our [Angular Advanced Intensiv Workshop](https://workshops.de/seminare-schulungen-kurse/angular-advanced).
+<p align="center">
+  <img alt="workshops-de-logo-blue" src="docs/logo-workshops-de.png" width="120">
+  <br>
+  <em>The best way to accelerate your Angular skills</em>
+  <br>
+</p>
 
-## Development server
+<p align="center">
+  <a href="https://workshops.de/seminare-schulungen-kurse/angular-advanced" target="_blank"><strong>workshops.de</strong></a>
+  <br>
+</p>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Local Development
 
-## Running unit tests
+| Command         | Description                                       |
+| --------------- | ------------------------------------------------- |
+| `npm install`   | Installs the packages to develop the Angular app  |
+| `npm start`     | Starts the Angular app                            |
+| `npm test`      | Runs tests for the Angular app                    |
+| `npm run build` | Compiles the Angular app in production mode       |
+| `npm run lint`  | Runs static code analysis using [eslint][eslint]. |
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## The API
 
-# How to updates the steps for our Workshop
+| Command              | Description                                       |
+| -------------------- | ------------------------------------------------- |
+| `npx bookmonkey-api` | Installs and starts the HTTP API "Bookmonkey API" |
 
-1. `git rebase -i a7bfef2d02ab39024567e281ea9b0096344494ea`
-2. Change `pick` to `edit` at the tasks you want to change
-3. Do your changes
-4. `git commit --all --amend`
-5. `git rebase --continue`
-6. Fix possible merge error if needed
-7. Repeat on step 3 if you edit more than one commits
-8. run `./recreate-tags.sh`
-9. `git push -f`
-10. `git push --tags -f`
+The API provides fake data that you can use in your Angular application.
+
+> [!NOTE]
+> The API starts at http://localhost:4730.
+> When you open this page, you’ll find documentation for all endpoints. 🚀

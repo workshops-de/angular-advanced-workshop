@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # First delete all old tags
-deletedTags=$(git tag | xargs git tag -d)
+deletedTags=$(git tag | grep solve-- | xargs git tag -d)
 
 # Read all commits (one per line)
-logs=$(git log --oneline)
+logs=$(git log --oneline | grep solve--)
 
 # read every line of git log
 IFS=$'\n'
@@ -19,6 +19,8 @@ for line in $logs; do
   message=${message//'('/}
   message=${message//')'/}
 
-  git tag $message $sha
   echo $message
+  git tag $message $sha
+  git push origin :$message
+  git push origin $message
 done
