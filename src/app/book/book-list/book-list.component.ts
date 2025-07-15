@@ -3,13 +3,13 @@ import { Observable } from 'rxjs';
 import { BookApiService } from '../book-api.service';
 import { Book } from '../models';
 import { BookCardComponent } from '../book-card/book-card.component';
-import { AsyncPipe, NgFor } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'ws-book-list',
     styleUrls: ['./book-list.component.scss'],
     templateUrl: 'book-list.component.html',
-    imports: [NgFor, BookCardComponent, AsyncPipe]
+    imports: [BookCardComponent, AsyncPipe]
 })
 export class BookListComponent {
   protected books$: Observable<Book[]>;

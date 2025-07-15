@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatListItem, MatNavList } from '@angular/material/list';
 import { MatToolbar } from '@angular/material/toolbar';
@@ -15,18 +15,17 @@ import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/mat
     templateUrl: './main-navigation.component.html',
     styleUrls: ['./main-navigation.component.scss'],
     imports: [
-        MatSidenavContainer,
-        MatSidenav,
-        MatToolbar,
-        MatNavList,
-        MatListItem,
-        RouterLink,
-        MatSidenavContent,
-        NgIf,
-        MatIconButton,
-        MatIcon,
-        AsyncPipe
-    ]
+    MatSidenavContainer,
+    MatSidenav,
+    MatToolbar,
+    MatNavList,
+    MatListItem,
+    RouterLink,
+    MatSidenavContent,
+    MatIconButton,
+    MatIcon,
+    AsyncPipe
+]
 })
 export class MainNavigationComponent {
   protected isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(

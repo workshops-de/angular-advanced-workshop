@@ -1,5 +1,5 @@
 <h2 class="mat-h2">Edit</h2>
-<ng-container *ngIf="book$ | async">
+@if (book$ | async) {
   <form [formGroup]="form" (ngSubmit)="save()" class="book-edit__form">
     <mat-form-field>
       <mat-label>ISBN</mat-label>
@@ -8,7 +8,9 @@
     <mat-form-field>
       <mat-label>Title</mat-label>
       <input matInput formControlName="title" placeholder="Title" />
-      <mat-error *ngIf="form.hasError('required', 'title')"> Title is required </mat-error>
+      @if (form.hasError('required', 'title')) {
+        <mat-error> Title is required </mat-error>
+      }
     </mat-form-field>
     <mat-form-field>
       <mat-label>Subtitle</mat-label>
@@ -17,7 +19,9 @@
     <mat-form-field>
       <mat-label>Author</mat-label>
       <input matInput formControlName="author" placeholder="Author" />
-      <mat-error *ngIf="form.hasError('required', 'author')"> Author is required </mat-error>
+      @if (form.hasError('required', 'author')) {
+        <mat-error> Author is required </mat-error>
+      }
     </mat-form-field>
     <mat-form-field>
       <mat-label>Abstract</mat-label>
@@ -27,10 +31,9 @@
       <mat-label>Cover</mat-label>
       <input matInput formControlName="cover" placeholder="Cover URL" />
     </mat-form-field>
-
     <div class="form-actions">
       <button mat-button [routerLink]="['/books', isbnValue]">Cancel</button>
       <button mat-raised-button color="primary" [disabled]="!form.valid" type="submit">Save</button>
     </div>
   </form>
-</ng-container>
+}

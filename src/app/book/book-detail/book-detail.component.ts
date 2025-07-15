@@ -15,7 +15,7 @@ import {
   MatCardSubtitle,
   MatCardTitle
 } from '@angular/material/card';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -23,19 +23,18 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     styleUrls: ['./book-detail.component.scss'],
     templateUrl: 'book-detail.component.html',
     imports: [
-        NgIf,
-        MatCard,
-        MatCardHeader,
-        MatCardAvatar,
-        MatCardTitle,
-        MatCardSubtitle,
-        MatCardImage,
-        MatCardContent,
-        MatCardActions,
-        MatButton,
-        RouterLink,
-        AsyncPipe
-    ]
+    MatCard,
+    MatCardHeader,
+    MatCardAvatar,
+    MatCardTitle,
+    MatCardSubtitle,
+    MatCardImage,
+    MatCardContent,
+    MatCardActions,
+    MatButton,
+    RouterLink,
+    AsyncPipe
+]
 })
 export class BookDetailComponent {
   protected book$?: Observable<Book>;
