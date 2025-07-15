@@ -46,7 +46,7 @@
     "@angular/build": "^20.1.0",
     "@angular/cli": "^20.1.0",
     "@angular/compiler-cli": "^20.1.0",
-    "@ngneat/spectator": "^16.0.0",
+    "@ngneat/spectator": "^21.0.0",
     "@ngrx/eslint-plugin": "^20.0.0-rc.0",
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
