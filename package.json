@@ -1,6 +1,10 @@
 {
   "name": "bookmonkey-client-advanced",
   "version": "0.0.0",
+  "engines": {
+    "node": ">=22",
+    "npm": ">=11"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
