@@ -3,8 +3,8 @@ import { RouterOutlet } from '@angular/router';
 import { MainNavigationComponent } from './common-components/main-navigation/main-navigation.component';
 
 @Component({
-    selector: 'ws-root',
-    templateUrl: './app.component.html',
-    imports: [MainNavigationComponent, RouterOutlet]
+  selector: 'ws-root',
+  templateUrl: './app.component.html',
+  imports: [MainNavigationComponent, RouterOutlet]
 })
 export class AppComponent {}

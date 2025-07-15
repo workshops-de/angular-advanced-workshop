@@ -11,10 +11,10 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
 
 @Component({
-    selector: 'ws-main-navigation',
-    templateUrl: './main-navigation.component.html',
-    styleUrls: ['./main-navigation.component.scss'],
-    imports: [
+  selector: 'ws-main-navigation',
+  templateUrl: './main-navigation.component.html',
+  styleUrls: ['./main-navigation.component.scss'],
+  imports: [
     MatSidenavContainer,
     MatSidenav,
     MatToolbar,
@@ -25,7 +25,7 @@ import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/mat
     MatIconButton,
     MatIcon,
     AsyncPipe
-]
+  ]
 })
 export class MainNavigationComponent {
   private readonly breakpointObserver = inject(BreakpointObserver);
