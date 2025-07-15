@@ -19,24 +19,23 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'ws-book-detail',
-  styleUrls: ['./book-detail.component.scss'],
-  templateUrl: 'book-detail.component.html',
-  standalone: true,
-  imports: [
-    NgIf,
-    MatCard,
-    MatCardHeader,
-    MatCardAvatar,
-    MatCardTitle,
-    MatCardSubtitle,
-    MatCardImage,
-    MatCardContent,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    AsyncPipe
-  ]
+    selector: 'ws-book-detail',
+    styleUrls: ['./book-detail.component.scss'],
+    templateUrl: 'book-detail.component.html',
+    imports: [
+        NgIf,
+        MatCard,
+        MatCardHeader,
+        MatCardAvatar,
+        MatCardTitle,
+        MatCardSubtitle,
+        MatCardImage,
+        MatCardContent,
+        MatCardActions,
+        MatButton,
+        RouterLink,
+        AsyncPipe
+    ]
 })
 export class BookDetailComponent {
   protected book$?: Observable<Book>;

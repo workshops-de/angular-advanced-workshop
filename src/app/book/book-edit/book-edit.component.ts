@@ -12,11 +12,10 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'ws-book-edit',
-  templateUrl: './book-edit.component.html',
-  styleUrls: ['./book-edit.component.scss'],
-  standalone: true,
-  imports: [NgIf, ReactiveFormsModule, MatFormField, MatInput, MatLabel, MatError, MatButton, RouterLink, AsyncPipe]
+    selector: 'ws-book-edit',
+    templateUrl: './book-edit.component.html',
+    styleUrls: ['./book-edit.component.scss'],
+    imports: [NgIf, ReactiveFormsModule, MatFormField, MatInput, MatLabel, MatError, MatButton, RouterLink, AsyncPipe]
 })
 export class BookEditComponent {
   protected book$: Observable<Book> = EMPTY;

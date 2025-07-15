@@ -11,23 +11,22 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
 
 @Component({
-  selector: 'ws-main-navigation',
-  templateUrl: './main-navigation.component.html',
-  styleUrls: ['./main-navigation.component.scss'],
-  standalone: true,
-  imports: [
-    MatSidenavContainer,
-    MatSidenav,
-    MatToolbar,
-    MatNavList,
-    MatListItem,
-    RouterLink,
-    MatSidenavContent,
-    NgIf,
-    MatIconButton,
-    MatIcon,
-    AsyncPipe
-  ]
+    selector: 'ws-main-navigation',
+    templateUrl: './main-navigation.component.html',
+    styleUrls: ['./main-navigation.component.scss'],
+    imports: [
+        MatSidenavContainer,
+        MatSidenav,
+        MatToolbar,
+        MatNavList,
+        MatListItem,
+        RouterLink,
+        MatSidenavContent,
+        NgIf,
+        MatIconButton,
+        MatIcon,
+        AsyncPipe
+    ]
 })
 export class MainNavigationComponent {
   protected isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(

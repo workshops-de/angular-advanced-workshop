@@ -13,21 +13,20 @@ import {
 } from '@angular/material/card';
 
 @Component({
-  selector: 'ws-book-card',
-  templateUrl: './book-card.component.html',
-  styleUrls: ['./book-card.component.scss'],
-  standalone: true,
-  imports: [
-    MatCard,
-    MatCardHeader,
-    MatCardAvatar,
-    MatCardTitle,
-    MatCardSubtitle,
-    MatCardContent,
-    MatCardActions,
-    MatButton,
-    RouterLink
-  ]
+    selector: 'ws-book-card',
+    templateUrl: './book-card.component.html',
+    styleUrls: ['./book-card.component.scss'],
+    imports: [
+        MatCard,
+        MatCardHeader,
+        MatCardAvatar,
+        MatCardTitle,
+        MatCardSubtitle,
+        MatCardContent,
+        MatCardActions,
+        MatButton,
+        RouterLink
+    ]
 })
 export class BookCardComponent {
   @Input() content: Book = bookNa();

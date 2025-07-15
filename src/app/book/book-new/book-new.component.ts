@@ -11,11 +11,10 @@ import { MatError, MatFormField } from '@angular/material/form-field';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'ws-book-new',
-  styleUrls: ['./book-new.component.scss'],
-  templateUrl: './book-new.component.html',
-  standalone: true,
-  imports: [ReactiveFormsModule, MatFormField, MatInput, NgIf, MatError, MatButton, RouterLink, MatLabel]
+    selector: 'ws-book-new',
+    styleUrls: ['./book-new.component.scss'],
+    templateUrl: './book-new.component.html',
+    imports: [ReactiveFormsModule, MatFormField, MatInput, NgIf, MatError, MatButton, RouterLink, MatLabel]
 })
 export class BookNewComponent {
   protected form = this.formBuilder.nonNullable.group({
