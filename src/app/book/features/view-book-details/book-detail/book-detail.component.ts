@@ -15,8 +15,8 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { BookApiService } from '../book-api.service';
-import { Book } from '../models';
+import { BookApiClient } from '../../../data/book-api-client';
+import { Book } from '../../../data/models';
 
 @Component({
   selector: 'ws-book-detail',
@@ -38,7 +38,7 @@ import { Book } from '../models';
 })
 export class BookDetailComponent {
   private readonly router = inject(Router);
-  private readonly bookService = inject(BookApiService);
+  private readonly bookService = inject(BookApiClient);
   private readonly destroyRef = inject(DestroyRef);
 
   protected book$?: Observable<Book>;

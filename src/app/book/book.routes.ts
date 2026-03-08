@@ -1,14 +1,14 @@
 import { Routes } from '@angular/router';
-import { BookComponent } from './book.component';
-import { BookDetailComponent } from './book-detail/book-detail.component';
-import { BookNewComponent } from './book-new/book-new.component';
-import { BookListComponent } from './book-list/book-list.component';
-import { BookEditComponent } from './book-edit/book-edit.component';
+import { BookShell } from './book-shell';
+import { BookNewComponent } from './features/create-book/book-new/book-new.component';
+import { BookEditComponent } from './features/edit-book/book-edit/book-edit.component';
+import { BookDetailComponent } from './features/view-book-details/book-detail/book-detail.component';
+import { BookListComponent } from './features/view-books/book-list/book-list.component';
 
 export const bookRoutes: Routes = [
   {
     path: '',
-    component: BookComponent,
+    component: BookShell,
     children: [
       {
         path: '',

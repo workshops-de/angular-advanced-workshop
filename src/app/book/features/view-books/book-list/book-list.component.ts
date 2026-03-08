@@ -1,9 +1,9 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BookApiService } from '../book-api.service';
-import { Book } from '../models';
+import { BookApiClient } from '../../../data/book-api-client';
+import { Book } from '../../../data/models';
 import { BookCardComponent } from '../book-card/book-card.component';
-import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'ws-book-list',
@@ -12,7 +12,7 @@ import { AsyncPipe } from '@angular/common';
   imports: [BookCardComponent, AsyncPipe]
 })
 export class BookListComponent {
-  private readonly bookService = inject(BookApiService);
+  private readonly bookService = inject(BookApiClient);
 
   protected books$: Observable<Book[]>;
 
