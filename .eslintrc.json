@@ -33,6 +33,11 @@
             "mode": "file"
           },
           {
+            "type": "runtime-configuration",
+            "pattern": "./src/app/runtime-configuration/**/*.ts",
+            "mode": "file"
+          },
+          {
             "type": "shell",
             "pattern": "./src/app/*app*",
             "mode": "file"
@@ -71,11 +76,15 @@
             "rules": [
               {
                 "from": "shell",
-                "allow": ["shell", "common-components"]
+                "allow": ["shell", "common-components", "runtime-configuration"]
               },
               {
                 "from": "book",
-                "allow": ["book"]
+                "allow": ["book", "runtime-configuration"]
+              },
+              {
+                "from": "runtime-configuration",
+                "allow": ["runtime-configuration"]
               }
             ]
           }
