@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { RuntimeConfiguration } from '../../runtime-configuration/runtime-configuration';
 import { Book } from './models';
 
 @Injectable({ providedIn: 'root' })
 export class BookApiClient {
   private readonly http = inject(HttpClient);
-
-  private readonly endpoint = 'http://localhost:4730/books';
+  private readonly runtimeConfiguration = inject(RuntimeConfiguration);
+  private readonly endpoint = this.runtimeConfiguration.apiEndpoints().books;
 
   getAll(): Observable<Book[]> {
     return this.http.get<Book[]>(`${this.endpoint}`);
