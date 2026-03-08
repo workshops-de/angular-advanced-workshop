@@ -15,6 +15,30 @@
         "plugin:prettier/recommended",
         "plugin:boundaries/recommended"
       ],
+      "settings": {
+        "import/resolver": {
+          "typescript": {
+            "alwaysTryTypes": true
+          }
+        },
+        "boundaries/elements": [
+          {
+            "type": "book",
+            "pattern": "./src/app/book/**/*.ts",
+            "mode": "file"
+          },
+          {
+            "type": "common-components",
+            "pattern": "./src/app/common-components/**/*.ts",
+            "mode": "file"
+          },
+          {
+            "type": "shell",
+            "pattern": "./src/app/*app*",
+            "mode": "file"
+          }
+        ]
+      },
       "rules": {
         "@angular-eslint/directive-selector": [
           "error",
@@ -39,7 +63,24 @@
           }
         ],
         "@typescript-eslint/no-inferrable-types": "error",
-        "@typescript-eslint/prefer-readonly": "error"
+        "@typescript-eslint/prefer-readonly": "error",
+        "boundaries/element-types": [
+          2,
+          {
+            "default": "disallow",
+            "rules": [
+              {
+                "from": "shell",
+                "allow": ["shell", "common-components"]
+              },
+              {
+                "from": "book",
+                "allow": ["book"]
+              }
+            ]
+          }
+        ],
+        "boundaries/no-unknown": [2]
       }
     },
     {
