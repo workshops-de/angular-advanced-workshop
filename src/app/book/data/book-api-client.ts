@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Book } from './models';
 
 @Injectable({ providedIn: 'root' })
-export class BookApiService {
+export class BookApiClient {
   private readonly http = inject(HttpClient);
 
   private readonly endpoint = 'http://localhost:4730/books';
