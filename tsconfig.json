@@ -21,7 +21,8 @@
     "module": "ES2022",
     "useDefineForClassFields": false,
     "paths": {
-      "@common-components": ["./src/app/common-components/public-api.ts"]
+      "@common-components": ["./src/app/common-components/public-api.ts"],
+      "@runtime-configuration": ["./src/app/runtime-configuration/public-api.ts"]
     }
   },
   "angularCompilerOptions": {
