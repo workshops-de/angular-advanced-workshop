@@ -8,8 +8,8 @@ import { MatInput, MatLabel } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { EMPTY, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { BookApiService } from '../book-api.service';
-import { Book } from '../models';
+import { BookApiClient } from '../../../data/book-api-client';
+import { Book } from '../../../data/models';
 
 @Component({
   selector: 'ws-book-edit',
@@ -19,7 +19,7 @@ import { Book } from '../models';
 })
 export class BookEditComponent {
   private readonly formBuilder = inject(FormBuilder);
-  private readonly bookService = inject(BookApiService);
+  private readonly bookService = inject(BookApiClient);
   private readonly destroyRef = inject(DestroyRef);
 
   protected book$: Observable<Book> = EMPTY;

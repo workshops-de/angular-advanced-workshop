@@ -11,7 +11,7 @@ import {
   MatCardTitle
 } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
-import { Book, bookNa } from '../models';
+import { Book, bookNa } from '../../../data/models';
 
 @Component({
   selector: 'ws-book-card',

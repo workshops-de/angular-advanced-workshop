@@ -1,14 +1,14 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
 import { tap } from 'rxjs/operators';
-import { BookApiService } from '../book-api.service';
-import { bookNa } from '../models';
-import { MatButton } from '@angular/material/button';
+import { BookApiClient } from '../../../data/book-api-client';
+import { bookNa } from '../../../data/models';
 
-import { MatInput, MatLabel } from '@angular/material/input';
-import { MatError, MatFormField } from '@angular/material/form-field';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatError, MatFormField } from '@angular/material/form-field';
+import { MatInput, MatLabel } from '@angular/material/input';
 
 @Component({
   selector: 'ws-book-new',
@@ -19,7 +19,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class BookNewComponent {
   private readonly formBuilder = inject(FormBuilder);
   private readonly router = inject(Router);
-  private readonly bookService = inject(BookApiService);
+  private readonly bookService = inject(BookApiClient);
   private readonly destroyRef = inject(DestroyRef);
 
   protected form = this.formBuilder.nonNullable.group({
