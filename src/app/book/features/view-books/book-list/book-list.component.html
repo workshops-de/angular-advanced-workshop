@@ -1,7 +1,7 @@
 <h2 class="mat-h2">Books</h2>
 
 <div class="books-grid">
-  @for (book of books$ | async; track book) {
+  @for (book of bookStore.books(); track book.id) {
     <ws-book-card [content]="book" />
   }
 </div>
