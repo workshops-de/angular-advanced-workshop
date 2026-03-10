@@ -3,5 +3,7 @@
 <div class="books-grid">
   @for (book of bookStore.books(); track book.id) {
     <ws-book-card [content]="book" />
+  } @empty {
+    No books available, yet
   }
 </div>
