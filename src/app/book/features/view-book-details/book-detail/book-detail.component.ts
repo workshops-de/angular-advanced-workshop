@@ -1,4 +1,4 @@
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import {
   MatCard,
@@ -34,10 +34,6 @@ export class BookDetailComponent {
   protected readonly store = inject(BookStore);
 
   isbn = input.required<string>();
-
-  constructor() {
-    effect(() => this.store.setBookDetailISBN(this.isbn()));
-  }
 
   remove() {
     this.store.removeBook({ bookISBN: this.isbn() });
