@@ -1,7 +1,7 @@
 <h2 class="mat-h2">Books</h2>
 
 <div class="books-grid">
-  @for (book of bookStore.books(); track book.id) {
+  @for (book of bookStore.entities(); track book.id) {
     <ws-book-card [content]="book" />
   } @empty {
     No books available, yet
