@@ -1,6 +1,4 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, DestroyRef, effect, inject, input } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, effect, inject, input } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import {
   MatCard,
@@ -12,11 +10,8 @@ import {
   MatCardSubtitle,
   MatCardTitle
 } from '@angular/material/card';
-import { Router, RouterLink } from '@angular/router';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { BookApiClient } from '../../../data/book-api-client';
-import { Book } from '../../../data/models';
+import { RouterLink } from '@angular/router';
+import { BookStore } from '../../../state/book-store';
 
 @Component({
   selector: 'ws-book-detail',
@@ -32,34 +27,19 @@ import { Book } from '../../../data/models';
     MatCardContent,
     MatCardActions,
     MatButton,
-    RouterLink,
-    AsyncPipe
+    RouterLink
   ]
 })
 export class BookDetailComponent {
-  private readonly router = inject(Router);
-  private readonly bookService = inject(BookApiClient);
-  private readonly destroyRef = inject(DestroyRef);
-
-  protected book$?: Observable<Book>;
+  protected readonly store = inject(BookStore);
 
   isbn = input.required<string>();
 
   constructor() {
-    effect(() => this.loadBookByIsbn(this.isbn()));
+    effect(() => this.store.setBookDetailISBN(this.isbn()));
   }
 
   remove() {
-    this.bookService
-      .delete(this.isbn())
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        tap(() => this.router.navigateByUrl('/'))
-      )
-      .subscribe();
-  }
-
-  private loadBookByIsbn(isbn: string) {
-    this.book$ = this.bookService.getByIsbn(isbn);
+    this.store.removeBook({ bookISBN: this.isbn() });
   }
 }
