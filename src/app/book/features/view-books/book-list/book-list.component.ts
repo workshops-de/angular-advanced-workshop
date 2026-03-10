@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BookStore } from '../../../state/book-store';
 import { BookCardComponent } from '../book-card/book-card.component';
 
@@ -8,10 +8,6 @@ import { BookCardComponent } from '../book-card/book-card.component';
   templateUrl: 'book-list.component.html',
   imports: [BookCardComponent]
 })
-export class BookListComponent implements OnInit {
+export class BookListComponent {
   protected readonly bookStore = inject(BookStore);
-
-  ngOnInit(): void {
-    this.bookStore.loadBooks();
-  }
 }
