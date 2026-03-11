@@ -6,8 +6,8 @@ import { patchState, signalStoreFeature, withComputed, withMethods } from '@ngrx
 import { removeEntity, SelectEntityId, setEntities, withEntities } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap } from 'rxjs';
-import { BookApiClient } from '../data/book-api-client';
-import { Book } from '../data/models';
+import { BookApiClient } from '../../data/book-api-client';
+import { Book } from '../../data/models';
 
 const selectId: SelectEntityId<Book> = book => book.isbn;
 

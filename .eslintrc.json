@@ -80,11 +80,15 @@
               },
               {
                 "from": "book",
-                "allow": ["book", "runtime-configuration"]
+                "allow": ["book", "runtime-configuration", "common-components"]
               },
               {
                 "from": "runtime-configuration",
                 "allow": ["runtime-configuration"]
+              },
+              {
+                "from": "common-components",
+                "allow": ["common-components"]
               }
             ]
           }

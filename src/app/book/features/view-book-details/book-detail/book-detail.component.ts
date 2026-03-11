@@ -11,7 +11,7 @@ import {
   MatCardTitle
 } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
-import { BookStore } from '../../../state/book-store';
+import { BookStore } from '../../../state/book-store/book-store';
 
 @Component({
   selector: 'ws-book-detail',
