@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { BookStore } from '../../../state/book-store';
+import { BookStore } from '../../../state/book-store/book-store';
 import { BookCardComponent } from '../book-card/book-card.component';
 
 @Component({

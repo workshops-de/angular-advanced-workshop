@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { RuntimeConfiguration } from '../../runtime-configuration/runtime-configuration';
 import { Book } from './models';
 
@@ -28,5 +28,9 @@ export class BookApiClient {
 
   delete(isbn: string): Observable<Book> {
     return this.http.delete<Book>(`${this.endpoint}/${isbn}`);
+  }
+
+  findAll(searchQuery: string) {
+    return searchQuery.trim() === '' ? of([]) : this.http.get<Book[]>(`${this.endpoint}?q=${searchQuery}`);
   }
 }
