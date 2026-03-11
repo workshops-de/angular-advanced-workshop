@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { BookShell } from './book-shell';
+import { BookSearchPage } from './features/search-books/book-search-page';
 
 export const bookRoutes: Routes = [
   {
@@ -9,6 +10,10 @@ export const bookRoutes: Routes = [
       {
         path: '',
         loadComponent: () => import('./features/view-books/book-list/book-list.component').then(m => m.BookListComponent)
+      },
+      {
+        path: 'search',
+        component: BookSearchPage
       },
       {
         path: 'new',
