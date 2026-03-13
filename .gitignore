@@ -40,6 +40,9 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Testing
-playwright-report/
-test-results/
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/

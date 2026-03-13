@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # First delete all old tags
-deletedTags=$(git tag | grep solve-- | xargs git tag -d)
+deletedTags=$(git tag | grep solve--archi | xargs git tag -d)
 
 # Read all commits (one per line)
 logs=$(git log --oneline | grep solve--)
