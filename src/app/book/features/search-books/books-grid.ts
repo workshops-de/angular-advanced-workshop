@@ -11,7 +11,7 @@ import { BookCardComponent } from '../view-books/book-card/book-card.component';
       @for (book of books(); track book.id) {
         <ws-book-card [content]="book" />
       } @empty {
-        No books found, yet. ✌️
+        <p data-testid="search-no-results">No books found, yet. ✌️</p>
       }
     </div>
   `,

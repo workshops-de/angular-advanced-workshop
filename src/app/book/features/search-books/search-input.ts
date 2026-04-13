@@ -11,10 +11,15 @@ import { MatInput } from '@angular/material/input';
     <form (submit)="emitSearchFormUpdate($event)">
       <mat-form-field>
         <mat-label>Search</mat-label>
-        <input type="search" matInput [formField]="searchForm.searchQuery" placeholder="Search a book..." />
+        <input
+          type="search"
+          role="search"
+          matInput
+          [formField]="searchForm.searchQuery"
+          placeholder="Search a book..."
+        />
       </mat-form-field>
-
-      <button mat-raised-button color="primary" type="submit">Search</button>
+      <button mat-raised-button color="primary" data-testid="book-search-submit" type="submit">Search</button>
     </form>
   `
 })
