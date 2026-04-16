@@ -25,7 +25,6 @@
             "index": "src/index.html",
             "browser": "src/main.ts",
             "tsConfig": "./tsconfig.app.json",
-            "polyfills": ["zone.js"],
             "inlineStyleLanguage": "scss",
             "assets": ["src/assets", "src/favicon.ico"],
             "styles": ["@angular/material/prebuilt-themes/indigo-pink.css", "src/styles.scss"],
@@ -76,7 +75,6 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
