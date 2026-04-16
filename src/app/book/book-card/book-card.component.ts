@@ -1,6 +1,5 @@
+import { SlicePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { Book, bookNa } from '../models';
-import { RouterLink } from '@angular/router';
 import { MatButton } from '@angular/material/button';
 import {
   MatCard,
@@ -11,6 +10,8 @@ import {
   MatCardSubtitle,
   MatCardTitle
 } from '@angular/material/card';
+import { RouterLink } from '@angular/router';
+import { Book, bookNa } from '../models';
 
 @Component({
   selector: 'ws-book-card',
@@ -25,7 +26,8 @@ import {
     MatCardContent,
     MatCardActions,
     MatButton,
-    RouterLink
+    RouterLink,
+    SlicePipe
   ]
 })
 export class BookCardComponent {
