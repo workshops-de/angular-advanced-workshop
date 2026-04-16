@@ -1,9 +1,9 @@
 /// <reference types="vitest" />
 
-import { defineConfig } from 'vite';
 import angular from '@analogjs/vite-plugin-angular';
-import viteTsConfigPaths from 'vite-tsconfig-paths';
 import { playwright } from '@vitest/browser-playwright';
+import { defineConfig } from 'vite';
+import viteTsConfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => ({
     browser: {
       enabled: true,
       provider: playwright(),
-      instances: [{ browser: 'chromium' }]
+      instances: [{ browser: 'chromium', headless: false }]
     },
 
     setupFiles: ['src/test-setup.ts'],
