@@ -1,30 +1,25 @@
 import { Routes } from '@angular/router';
-import { BookComponent } from './book.component';
-import { BookDetailComponent } from './book-detail/book-detail.component';
-import { BookNewComponent } from './book-new/book-new.component';
-import { BookListComponent } from './book-list/book-list.component';
-import { BookEditComponent } from './book-edit/book-edit.component';
 
 export const bookRoutes: Routes = [
   {
     path: '',
-    component: BookComponent,
+    loadComponent: () => import('./book.component').then(m => m.BookComponent),
     children: [
       {
         path: '',
-        component: BookListComponent
+        loadComponent: () => import('./book-list/book-list.component').then(m => m.BookListComponent)
       },
       {
         path: 'new',
-        component: BookNewComponent
+        loadComponent: () => import('./book-new/book-new.component').then(m => m.BookNewComponent)
       },
       {
         path: ':isbn',
-        component: BookDetailComponent
+        loadComponent: () => import('./book-detail/book-detail.component').then(m => m.BookDetailComponent)
       },
       {
         path: ':isbn/edit',
-        component: BookEditComponent
+        loadComponent: () => import('./book-edit/book-edit.component').then(m => m.BookEditComponent)
       }
     ]
   }
