@@ -23,7 +23,9 @@
     </div>
   </div>
 
-  @if (bookResource.value(); as book) {
+  @if (isLoading()) {
+  <p>Loading book...</p>
+  } @else if (book(); as book) {
   <app-book-detail [book]="book" />
   }
 </div>

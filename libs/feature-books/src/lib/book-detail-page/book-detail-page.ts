@@ -1,8 +1,8 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, effect, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { BookDetail } from '../book-detail/book-detail';
-import { BooksClient } from '../books-client';
+import { BookStore } from '../state/book-store';
 
 @Component({
   selector: 'app-book-detail-page',
@@ -10,8 +10,14 @@ import { BooksClient } from '../books-client';
   templateUrl: './book-detail-page.html'
 })
 export class BookDetailPage {
-  private booksClient = inject(BooksClient);
-  isbn = input('');
+  private readonly store = inject(BookStore);
 
-  bookResource = this.booksClient.getByIsbn(this.isbn);
+  readonly isbn = input('');
+
+  protected readonly book = this.store.currentBook;
+  protected readonly isLoading = this.store.isLoading;
+
+  constructor() {
+    effect(() => this.store.selectBook(this.isbn()));
+  }
 }
