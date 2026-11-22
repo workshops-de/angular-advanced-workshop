@@ -1,12 +1,10 @@
 import { Component, computed, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { lastValueFrom } from 'rxjs';
 
 import { bookMatches } from '@bookmonkey/util';
 import { Book } from '../book';
 import { BookCard } from '../book-card/book-card';
 import { BookMarkerStore } from '../book-marker-store';
-import { BooksClient } from '../books-client';
 import { BookStore } from '../state/book-store';
 
 @Component({
@@ -17,13 +15,12 @@ import { BookStore } from '../state/book-store';
 })
 export class BooksPage {
   router = inject(Router);
-  booksClient = inject(BooksClient);
   bookMarkerStore = inject(BookMarkerStore);
   store = inject(BookStore);
 
   booksComputed = computed(() => {
     const markTerm = this.bookMarkerStore.markTerm();
-    const books = this.store.books();
+    const books = this.store.bookEntities();
 
     return books.filter(book => bookMatches(book, markTerm));
   });
@@ -32,12 +29,11 @@ export class BooksPage {
     await this.router.navigate(['/books', 'detail', book.isbn]);
   }
 
-  async deleteBook(book: Book) {
+  deleteBook(book: Book) {
     if (!window.confirm(`Delete "${book.title}"?`)) {
       return;
     }
 
-    await lastValueFrom(this.booksClient.delete(book.isbn));
-    this.store.loadBooks();
+    this.store.removeBook(book.isbn);
   }
 }
