@@ -1,5 +1,6 @@
 /// <reference types="vitest" />
 
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import angular from '@analogjs/vite-plugin-angular';
 import viteTsConfigPaths from 'vite-tsconfig-paths';
@@ -7,7 +8,7 @@ import { playwright } from '@vitest/browser-playwright';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  plugins: [angular(), viteTsConfigPaths()],
+  plugins: [angular({ tsconfig: fileURLToPath(new URL('./tsconfig.spec.json', import.meta.url)) }), viteTsConfigPaths()],
   test: {
     globals: true,
 
