@@ -42,4 +42,28 @@ The Bookmonkey client grows. A second app (`rating`) already exists and is integ
 - **Faster pipelines** — Caching and `nx affected` skip work for unchanged projects.
 - **Shared code without publishing** — Apps import libraries directly from the same repository.
 - **Trade-off** — The team has to learn Nx and keep its versions aligned with Angular.
-- **Follow-up** — Tags and `depConstraints` for the module boundaries are added to this ADR once they are defined.
+- **Enforced boundaries** — Every violation of the rules below fails `nx lint`, locally and in the pipeline.
+
+## Module boundaries
+
+Every project carries two tags. The lint rule `@nx/enforce-module-boundaries` checks them on each import.
+
+| Tag dimension | Tags                                                            | Meaning                                 |
+| ------------- | --------------------------------------------------------------- | --------------------------------------- |
+| **type**      | `type:app`, `type:feature`, `type:ui`, `type:core`, `type:util` | The layer a project belongs to          |
+| **scope**     | `scope:books`, `scope:dashboard`, `scope:shared`                | The business area that owns the project |
+
+| Source            | May depend on                                       |
+| ----------------- | --------------------------------------------------- |
+| `type:app`        | `type:feature`, `type:ui`, `type:core`, `type:util` |
+| `type:feature`    | `type:ui`, `type:core`, `type:util`                 |
+| `type:ui`         | `type:util`                                         |
+| `type:core`       | `type:util`                                         |
+| `type:util`       | `type:util`                                         |
+| `scope:books`     | `scope:books`, `scope:shared`                       |
+| `scope:dashboard` | `scope:dashboard`, `scope:shared`                   |
+| `scope:shared`    | `scope:shared`                                      |
+
+- Dependencies point downwards only. A feature never imports another feature.
+- A feature uses the shared libraries, but never the code of another business area.
+- The rules live in `eslint.config.mjs` as `depConstraints`. A new library gets a `type:` and a `scope:` tag first.
