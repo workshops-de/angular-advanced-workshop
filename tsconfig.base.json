@@ -1,0 +1,21 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "bundler",
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "skipLibCheck": true,
+    "strict": true,
+    "paths": {
+      "@bookmonkey/core": ["./libs/core/src/index.ts"],
+      "@bookmonkey/ui": ["./libs/ui/src/index.ts"],
+      "@bookmonkey/util": ["./libs/util/src/index.ts"],
+      "@bookmonkey/feature-dashboard": ["./libs/feature-dashboard/src/index.ts"],
+      "@bookmonkey/feature-books": ["./libs/feature-books/src/index.ts"]
+    }
+  }
+}

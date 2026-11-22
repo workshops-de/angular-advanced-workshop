@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Renderer2, afterRenderEffect, inject, input } from '@angular/core';
 
-import { classifyMarkSegments } from '@workshop-support';
+import { classifyMarkSegments } from '@bookmonkey/util';
 import { BookMarkerStore } from './book-marker-store';
 
 @Directive({ selector: '[appBookMarker]' })

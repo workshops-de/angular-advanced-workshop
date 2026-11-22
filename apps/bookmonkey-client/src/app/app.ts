@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { Sidebar } from '@workshop-support';
+import { Sidebar } from '@bookmonkey/ui';
 
 @Component({
   selector: 'app-root',

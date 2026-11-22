@@ -2,7 +2,7 @@ import { Component, computed, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 
-import { bookMatches } from '@workshop-support';
+import { bookMatches } from '@bookmonkey/util';
 import { Book } from '../book';
 import { BookCard } from '../book-card/book-card';
 import { BookMarkerStore } from '../book-marker-store';
