@@ -7,6 +7,7 @@ import { Book } from '../book';
 import { BookCard } from '../book-card/book-card';
 import { BookMarkerStore } from '../book-marker-store';
 import { BooksClient } from '../books-client';
+import { BookStore } from '../state/book-store';
 
 @Component({
   selector: 'app-books-page',
@@ -18,12 +19,13 @@ export class BooksPage {
   router = inject(Router);
   booksClient = inject(BooksClient);
   bookMarkerStore = inject(BookMarkerStore);
+  store = inject(BookStore);
 
   booksResource = this.booksClient.getAll();
 
   booksComputed = computed(() => {
     const markTerm = this.bookMarkerStore.markTerm();
-    const books = this.booksResource.value();
+    const books = this.store.books();
 
     return books.filter(book => bookMatches(book, markTerm));
   });
