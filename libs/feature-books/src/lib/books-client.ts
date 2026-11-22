@@ -25,10 +25,17 @@ export class BooksClient {
 
   /** Stream variant of `getAll()` for the Signal Store. Uses a static endpoint. */
   list(): Observable<Book[]> {
+    return this.#fetchBooks({ _start: 0, _end: 15, _sort: 'createdAt', _order: 'desc' });
+  }
+
+  /** Full-text search over all books. */
+  search(query: string): Observable<Book[]> {
+    return this.#fetchBooks({ q: query, _limit: 15 });
+  }
+
+  #fetchBooks(params: Record<string, string | number>): Observable<Book[]> {
     return this.http
-      .get<unknown>(`${BOOKS_API_URL}/books`, {
-        params: { _start: 0, _end: 15, _sort: 'createdAt', _order: 'desc' }
-      })
+      .get<unknown>(`${BOOKS_API_URL}/books`, { params })
       .pipe(map(books => v.parse(BooksCollectionSchema, books)));
   }
 

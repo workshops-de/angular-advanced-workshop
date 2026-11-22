@@ -8,6 +8,10 @@ export const bookRoutes: Routes = [
     component: BooksPage
   },
   {
+    path: 'search',
+    loadComponent: () => import('./book-search-page/book-search-page').then(c => c.BookSearchPage)
+  },
+  {
     path: 'create',
     loadComponent: () => import('./book-create-page/book-create-page').then(c => c.BookCreatePage),
     canDeactivate: [confirmLeaveGuardFn]
