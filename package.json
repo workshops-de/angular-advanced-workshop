@@ -15,6 +15,8 @@
     "build:all": "ng build rating && ng build bookmonkey-client",
     "test": "ng test bookmonkey-client",
     "test:rating": "ng test rating",
+    "solution.next": "bash tools/next-solution.sh",
+    "solution.fuzzy": "bash tools/fuzzy-solution.sh",
     "format": "prettier --write \"**/*.{js,json,css,md,ts,html}\""
   },
   "private": true,
