@@ -29,25 +29,31 @@
     "@angular/platform-browser": "~22.2.0",
     "@angular/platform-browser-dynamic": "~22.2.0",
     "@angular/router": "~22.2.0",
+    "es-module-shims": "^2.8.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "valibot": "^1.4.2",
-    "es-module-shims": "^2.8.0"
+    "valibot": "^1.4.2"
   },
   "devDependencies": {
+    "@analogjs/vite-plugin-angular": "^2.9.7",
+    "@analogjs/vitest-angular": "^2.9.7",
     "@angular/build": "~22.2.0",
     "@angular/cli": "~22.2.0",
     "@angular/compiler-cli": "~22.2.0",
+    "@softarc/native-federation-orchestrator": "^4.10.0",
     "@tailwindcss/postcss": "^4.1.12",
     "@testing-library/angular": "^19.4.2",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/user-event": "^14.6.5",
+    "@vitest/browser-playwright": "^5.0.0",
     "jsdom": "^30.0.1",
+    "playwright": "^1.54.0",
     "postcss": "^8.5.3",
     "prettier": "^3.1.1",
     "tailwindcss": "^4.1.12",
     "typescript": "~6.0.3",
-    "vitest": "^4.0.8",
-    "@softarc/native-federation-orchestrator": "^4.10.0"
+    "vite": "^8.0.0",
+    "vite-tsconfig-paths": "^4.2.0",
+    "vitest": "^5.0.0"
   }
 }

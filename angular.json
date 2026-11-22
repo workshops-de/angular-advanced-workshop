@@ -73,13 +73,7 @@
           }
         },
         "test": {
-          "builder": "@angular/build:unit-test",
-          "options": {
-            "tsConfig": "projects/bookmonkey-client/tsconfig.spec.json",
-            "buildTarget": ":build:testing",
-            "runner": "vitest",
-            "setupFiles": ["projects/bookmonkey-client/src/test-setup.ts"]
-          }
+          "builder": "@analogjs/vitest-angular:test"
         }
       }
     },

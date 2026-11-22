@@ -1,9 +1,9 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/bookmonkey-client-spec",
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals"],
+    "target": "es2022"
   },
   "include": ["src/**/*.spec.ts", "src/**/*.d.ts", "src/test-setup.ts"],
   "angularCompilerOptions": {
@@ -13,5 +13,6 @@
         "optionalChainNotNullable": "suppress"
       }
     }
-  }
+  },
+  "files": ["src/test-setup.ts"]
 }
