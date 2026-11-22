@@ -10,6 +10,7 @@ export class Sidebar {
   pageLinks = signal({
     dashboard: '',
     books: '/books',
+    booksSearch: '/books/search',
     booksCreate: '/books/create'
   });
 }

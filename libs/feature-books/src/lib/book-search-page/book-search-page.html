@@ -1,0 +1,20 @@
+<h1 class="page-title">Search books</h1>
+
+<input
+  class="search-field"
+  type="search"
+  placeholder="Search the whole catalog..."
+  (input)="search($event.target.value)"
+/>
+
+@if (store.isLoading()) {
+<p>Searching...</p>
+}
+
+<div class="book-grid">
+  @for (book of store.books(); track book.id) {
+  <app-book-card [book]="book">
+    <a [routerLink]="['/books', 'detail', book.isbn]" class="btn-secondary">More</a>
+  </app-book-card>
+  }
+</div>
