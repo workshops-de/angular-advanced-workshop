@@ -4,6 +4,9 @@
 /dist
 /tmp
 
+# vite artifacts
+.vite
+
 # dependencies
 /node_modules
 
