@@ -1,12 +1,12 @@
 import { computed, inject } from '@angular/core';
+import { withImmutableState } from '@angular-architects/ngrx-toolkit';
 import { tapResponse } from '@ngrx/operators';
 import {
   patchState,
   signalStoreFeature,
   withComputed,
   withHooks,
-  withMethods,
-  withState
+  withMethods
 } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
@@ -27,7 +27,7 @@ const initialState: BooksState = {
 
 export function withBooks() {
   return signalStoreFeature(
-    withState(initialState),
+    withImmutableState(initialState),
     withComputed(store => ({
       currentBook: computed(() => store.books().find(book => book.isbn === store.selectedIsbn()))
     })),
