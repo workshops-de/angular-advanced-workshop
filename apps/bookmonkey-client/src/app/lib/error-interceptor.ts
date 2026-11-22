@@ -2,7 +2,7 @@ import { HttpErrorResponse, type HttpHandlerFn, type HttpRequest } from '@angula
 import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 
-import { Notifier } from '@workshop-support';
+import { Notifier } from '@bookmonkey/core';
 
 /**
  * Functional interceptor that catches failed HTTP requests and shows a

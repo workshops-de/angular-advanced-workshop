@@ -58,3 +58,6 @@ Thumbs.db
 # Vitest cache and failure screenshots
 node_modules
 .vitest
+
+.angular
+vitest.config.*.timestamp*

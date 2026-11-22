@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { Welcome } from '@workshop-support';
+import { Welcome } from '@bookmonkey/feature-dashboard';
 
 export const routes: Routes = [
   {
@@ -9,6 +9,6 @@ export const routes: Routes = [
   },
   {
     path: 'books',
-    loadChildren: () => import('./books/book.routes').then(mod => mod.bookRoutes)
+    loadChildren: () => import('@bookmonkey/feature-books').then(mod => mod.bookRoutes)
   }
 ];
