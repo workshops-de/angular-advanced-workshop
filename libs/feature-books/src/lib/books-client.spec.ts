@@ -1,8 +1,10 @@
+import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { BooksClient } from './books-client';
 import { Book } from './book';
+import { BooksConfig } from './books-config';
 
 describe('BooksClient', () => {
   let booksClient: BooksClient;
@@ -17,7 +19,14 @@ describe('BooksClient', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideHttpClient(), provideHttpClientTesting()]
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        {
+          provide: BooksConfig,
+          useValue: { resource: { value: signal({ apiUrl: 'http://localhost:4730' }) } }
+        }
+      ]
     });
 
     booksClient = TestBed.inject(BooksClient);
