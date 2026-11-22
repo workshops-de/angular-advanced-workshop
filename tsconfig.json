@@ -20,7 +20,7 @@
     "module": "ES2022",
     "useDefineForClassFields": false,
     "paths": {
-      "@workshop-support": ["./projects/bookmonkey-client/src/app/workshop-support/public_api.ts"]
+      "@workshop-support": ["./apps/bookmonkey-client/src/app/workshop-support/public_api.ts"]
     }
   },
   "angularCompilerOptions": {

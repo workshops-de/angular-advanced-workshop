@@ -49,3 +49,12 @@ Thumbs.db
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+
+
+.nx/cache
+.nx/workspace-data
+.nx/migrate-runs
+# Vitest cache and failure screenshots
+node_modules
+.vitest

@@ -1,0 +1,97 @@
+{
+  "name": "rating",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/rating/src",
+  "prefix": "rating",
+  "generators": {},
+  "targets": {
+    "build": {
+      "executor": "@angular-architects/native-federation:build",
+      "defaultConfiguration": "production",
+      "options": {
+        "cacheExternalArtifacts": true,
+        "tsConfig": "apps/rating/tsconfig.federation.json"
+      },
+      "configurations": {
+        "production": {
+          "target": "rating:esbuild:production"
+        },
+        "development": {
+          "target": "rating:esbuild:development",
+          "dev": true
+        }
+      }
+    },
+    "serve": {
+      "executor": "@angular-architects/native-federation:build",
+      "options": {
+        "target": "rating:serve-original:development",
+        "tsConfig": "apps/rating/tsconfig.federation.json",
+        "rebuildDelay": 500,
+        "cacheExternalArtifacts": true,
+        "dev": true,
+        "devServer": true,
+        "port": 0
+      }
+    },
+    "test": {
+      "executor": "@angular/build:unit-test"
+    },
+    "esbuild": {
+      "executor": "@angular/build:application",
+      "defaultConfiguration": "production",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "browser": "apps/rating/src/main.ts",
+        "tsConfig": "apps/rating/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/rating/public"
+          }
+        ],
+        "styles": ["apps/rating/src/styles.css"],
+        "polyfills": ["es-module-shims"],
+        "outputPath": "dist/rating"
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kB",
+              "maximumError": "1MB"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kB",
+              "maximumError": "8kB"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      }
+    },
+    "serve-original": {
+      "executor": "@angular/build:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4201
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "rating:esbuild:production"
+        },
+        "development": {
+          "buildTarget": "rating:esbuild:development"
+        }
+      }
+    }
+  }
+}
