@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { tapResponse } from '@ngrx/operators';
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import { patchState, signalStore, withHooks, withMethods, withState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
 import { Book } from '../book';
@@ -33,5 +33,10 @@ export const BookStore = signalStore(
         )
       )
     )
-  }))
+  })),
+  withHooks({
+    onInit(store) {
+      store.loadBooks();
+    }
+  })
 );
