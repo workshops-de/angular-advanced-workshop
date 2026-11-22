@@ -8,10 +8,8 @@
   (input)="bookMarkerStore.setMarkTerm($event.target.value)"
 />
 
-@if (booksResource.isLoading()) {
+@if (store.isLoading()) {
 <p>Loading books...</p>
-} @else if (booksResource.error(); as error) {
-<p>Error: {{ error.message }}</p>
 }
 
 <div class="book-grid">
