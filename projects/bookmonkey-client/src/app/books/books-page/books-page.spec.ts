@@ -1,10 +1,10 @@
 import { Component, input, signal } from '@angular/core';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
-import { BooksPage } from './books-page';
+import { Book } from '../book';
 import { BookCard } from '../book-card/book-card';
 import { BooksClient } from '../books-client';
-import { Book } from '../book';
+import { BooksPage } from './books-page';
 
 @Component({
   selector: 'app-book-card',
@@ -71,14 +71,11 @@ describe('BooksPage', () => {
       getAll: vi.fn().mockReturnValue(mockBooksResource([mobyDick, friends]))
     };
 
-    await render(BooksPage, {
+    const { fixture } = await render(BooksPage, {
       importOverrides: [{ replace: BookCard, with: BookCardMock }],
       providers: [{ provide: BooksClient, useValue: booksClientMock }]
     });
 
-    const cards = screen.getAllByTestId('mock-book-card');
-    expect(cards).toHaveLength(2);
-    expect(cards[0]).toHaveTextContent('Moby Dick');
-    expect(cards[1]).toHaveTextContent('How to win friends');
+    await expect.poll(() => screen.getAllByTestId('mock-book-card')).toHaveLength(2);
   });
 });

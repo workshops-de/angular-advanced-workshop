@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/angular';
-import { BookCard } from './book-card';
 import { Book } from '../book';
+import { BookMarkerStore } from '../book-marker-store';
+import { BookCard } from './book-card';
 
 describe('BookCard', () => {
   const book: Book = {
@@ -12,13 +13,13 @@ describe('BookCard', () => {
   };
 
   it('should display the book title', async () => {
-    await render(BookCard, { componentInputs: { book } });
+    await render(BookCard, { componentInputs: { book }, providers: [BookMarkerStore] });
 
     expect(screen.getByText(book.title)).toBeInTheDocument();
   });
 
   it('should display the book author', async () => {
-    await render(BookCard, { componentInputs: { book } });
+    await render(BookCard, { componentInputs: { book }, providers: [BookMarkerStore] });
 
     expect(screen.getByText(book.author!)).toBeInTheDocument();
   });

@@ -2,9 +2,20 @@ import { render, screen } from '@testing-library/angular';
 import { App } from './app';
 
 describe('App', () => {
-  it('greets the attendee', async () => {
-    await render(App);
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
 
-    expect(screen.getByText(/Hello, Angularian/)).toBeInTheDocument();
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('greets the attendee', async () => {
+    const { fixture } = await render(App);
+
+    await vi.advanceTimersByTimeAsync(6000);
+    fixture.detectChanges();
+
+    expect(screen.getByText(/Hello Angularian/)).toBeInTheDocument();
   });
 });
