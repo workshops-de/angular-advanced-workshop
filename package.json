@@ -46,6 +46,7 @@
     "@nx/angular": "^24.0.6",
     "@nx/devkit": "^24.0.6",
     "@nx/eslint-plugin": "^24.0.6",
+    "@nx/vitest": "^24.0.6",
     "@oxc-project/runtime": "^0.159.0",
     "@softarc/native-federation-orchestrator": "^4.10.0",
     "@tailwindcss/postcss": "^4.1.12",
