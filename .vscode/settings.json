@@ -1,6 +1,5 @@
 {
-  "eslint.options": {
-    "extensions": [".ts", ".html"]
-  },
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "html"]
+  "search.exclude": {
+    "projects/bookmonkey-client/src/app/workshop-support": true
+  }
 }

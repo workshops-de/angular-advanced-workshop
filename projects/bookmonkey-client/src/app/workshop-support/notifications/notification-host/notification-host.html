@@ -1,0 +1,16 @@
+<div class="toast-host">
+  @for (notification of notifier.notifications(); track notification.id) {
+    <div
+      class="toast"
+      [class.toast-error]="notification.kind === 'error'"
+      [class.toast-success]="notification.kind === 'success'"
+      [class.toast-info]="notification.kind === 'info'"
+      [attr.role]="notification.kind === 'error' ? 'alert' : 'status'"
+    >
+      <span class="flex-1">{{ notification.message }}</span>
+      <button type="button" class="toast-close" (click)="notifier.dismiss(notification.id)" aria-label="Meldung schließen">
+        &times;
+      </button>
+    </div>
+  }
+</div>

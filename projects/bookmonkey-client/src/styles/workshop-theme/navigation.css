@@ -1,0 +1,19 @@
+/* --- Navigation --- */
+@utility nav-bar {
+  @apply m-0 flex list-none bg-gray-800 p-0;
+}
+@utility nav-link {
+  @apply block px-4 py-3.5 text-center text-white;
+  &:hover {
+    @apply bg-black;
+  }
+}
+@utility nav-link-active {
+  @apply bg-green-500;
+}
+@utility back-link {
+  @apply mb-2 inline-flex items-center gap-1.5 text-sm font-medium text-blue-800;
+  &:hover {
+    @apply underline;
+  }
+}

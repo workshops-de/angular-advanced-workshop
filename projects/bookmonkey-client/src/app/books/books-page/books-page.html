@@ -1,0 +1,24 @@
+<h1 class="page-title">Books</h1>
+
+<input
+  class="search-field"
+  type="search"
+  placeholder="Search..."
+  [value]="bookMarkerStore.markTerm()"
+  (input)="bookMarkerStore.setMarkTerm($event.target.value)"
+/>
+
+@if (booksResource.isLoading()) {
+<p>Loading books...</p>
+} @else if (booksResource.error(); as error) {
+<p>Error: {{ error.message }}</p>
+}
+
+<div class="book-grid">
+  @for (book of booksComputed(); track book.id) {
+  <app-book-card [book]="book">
+    <a [routerLink]="['detail', book.isbn]" class="btn-secondary">More</a>
+    <button type="button" class="btn-danger" (click)="deleteBook(book)">Delete</button>
+  </app-book-card>
+  }
+</div>

@@ -1,5 +1,0 @@
-{
-  "apiEndpoints": {
-    "books": "http://localhost:4730/books/"
-  }
-}

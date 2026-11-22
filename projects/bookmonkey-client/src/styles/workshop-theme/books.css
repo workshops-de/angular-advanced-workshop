@@ -1,0 +1,83 @@
+/* --- Cards --- */
+@utility book-grid {
+  @apply grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(280px,1fr))];
+}
+@utility book-card {
+  @apply flex h-full gap-4 rounded-md border border-gray-200 bg-white p-4 shadow-sm transition-shadow;
+  &:hover {
+    @apply shadow-md;
+  }
+}
+@utility book-cover {
+  @apply h-24 w-16 shrink-0 rounded border border-gray-200 bg-[#eef2f7] object-cover;
+}
+@utility book-card-body {
+  @apply flex min-w-0 flex-1 flex-col;
+}
+@utility book-published {
+  @apply mt-1.5 text-sm text-gray-500;
+}
+@utility book-card-actions {
+  @apply mt-auto flex gap-2 pt-3;
+}
+
+/* --- Book detail page --- */
+@utility book-detail {
+  @apply flex max-w-3xl flex-col gap-6;
+}
+@utility book-detail-header {
+  @apply flex gap-6;
+}
+@utility book-detail-bar {
+  @apply flex flex-wrap items-center justify-between gap-4;
+}
+@utility book-detail-cover {
+  @apply h-60 w-40 shrink-0 rounded border border-gray-200 bg-[#eef2f7] object-cover;
+}
+@utility book-detail-meta {
+  @apply flex min-w-0 flex-col gap-1;
+}
+@utility book-detail-title {
+  @apply text-2xl font-semibold text-gray-900;
+}
+@utility book-detail-subtitle {
+  @apply text-base text-gray-600;
+}
+@utility book-detail-author {
+  @apply text-lg font-semibold text-blue-800;
+}
+@utility book-detail-coauthors {
+  @apply text-sm text-gray-500;
+}
+@utility book-detail-isbn {
+  @apply text-sm text-gray-500;
+}
+@utility book-detail-facts {
+  @apply mt-2 flex flex-wrap gap-x-6 gap-y-1 text-sm;
+  & > div {
+    @apply flex gap-1.5;
+  }
+  & dt {
+    @apply text-gray-400;
+  }
+  & dd {
+    @apply m-0 text-gray-700;
+  }
+}
+@utility book-detail-abstract {
+  @apply leading-relaxed text-gray-700;
+}
+@utility book-detail-bar {
+  @apply flex flex-wrap items-center justify-between gap-4;
+}
+
+/* --- Cover preview (book-edit-form) --- */
+@utility cover-preview {
+  @apply flex items-start gap-4 rounded-md border border-gray-200 bg-white p-4;
+}
+@utility cover-preview-image {
+  @apply h-36 w-24 shrink-0 rounded border border-gray-200 bg-[#eef2f7] object-cover;
+}
+@utility cover-preview-label {
+  @apply block text-sm font-semibold text-gray-700;
+}

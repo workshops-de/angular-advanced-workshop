@@ -1,0 +1,56 @@
+<article class="book-detail">
+  <div class="book-detail-header">
+    <img
+      [src]="book().cover || 'book-cover-placeholder.svg'"
+      alt=""
+      class="book-detail-cover"
+    />
+
+    <div class="book-detail-meta">
+      <h1 class="book-detail-title">{{ book().title }}</h1>
+
+      @if (book().subtitle) {
+        <p class="book-detail-subtitle">{{ book().subtitle }}</p>
+      }
+
+      <p class="book-detail-author">{{ book().author }}</p>
+
+      @if (book().coAuthors?.length) {
+        <p class="book-detail-coauthors">with {{ book().coAuthors?.join(', ') }}</p>
+      }
+
+      <p class="book-detail-isbn">ISBN {{ book().isbn }}</p>
+
+      <dl class="book-detail-facts">
+        @if (book().publisher) {
+          <div>
+            <dt>Publisher</dt>
+            <dd>{{ book().publisher }}</dd>
+          </div>
+        }
+        @if (book().numPages) {
+          <div>
+            <dt>Pages</dt>
+            <dd>{{ book().numPages }}</dd>
+          </div>
+        }
+        @if (book().publishedAt; as publishedAt) {
+          <div>
+            <dt>Published</dt>
+            <dd>{{ publishedAt | date: 'longDate' }}</dd>
+          </div>
+        }
+        @if (book().price != null) {
+          <div>
+            <dt>Price</dt>
+            <dd>{{ book().price! | currency: book().currency }}</dd>
+          </div>
+        }
+      </dl>
+    </div>
+  </div>
+
+  @if (book().abstract) {
+    <p class="book-detail-abstract">{{ book().abstract }}</p>
+  }
+</article>

@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'tailwindcss';
+@import '@angular/cdk/overlay-prebuilt.css';
+
+@import './styles/workshop-theme/layout.css';
+@import './styles/workshop-theme/navigation.css';
+@import './styles/workshop-theme/buttons.css';
+@import './styles/workshop-theme/forms.css';
+@import './styles/workshop-theme/books.css';
+@import './styles/workshop-theme/highlight.css';
+@import './styles/workshop-theme/content-pages.css';
+@import './styles/workshop-theme/toast.css';

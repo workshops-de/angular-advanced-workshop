@@ -1,0 +1,23 @@
+<div class="field-collection-row">
+  <input
+    class="field-input min-w-0 flex-1"
+    [value]="value()"
+    [disabled]="disabled()"
+    (input)="value.set($any($event.target).value)"
+    (blur)="touch.emit()"
+    placeholder="Co-author name"
+  />
+  <button
+    type="button"
+    class="btn-icon-danger"
+    (click)="remove.emit()"
+    aria-label="Remove co-author"
+  >
+    ✕
+  </button>
+</div>
+@if (touched()) {
+  @for (error of errors(); track error.kind) {
+    <small class="field-error">{{ error.message }}</small>
+  }
+}

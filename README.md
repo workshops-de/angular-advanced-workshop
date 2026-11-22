@@ -12,15 +12,28 @@
   <br>
 </p>
 
+## Workspace Layout
+
+| Project             | Path                          | Description                                                         |
+| ------------------- | ----------------------------- | ------------------------------------------------------------------- |
+| `bookmonkey-client` | `projects/bookmonkey-client`  | The workshop app (Angular 22)                                       |
+| `rating`            | `projects/rating`             | Small 5-star rating app, **Native Federation remote** (port `4201`) |
+
+The `rating` app exposes its `Rating` component (`<rating-stars>`) as `./Rating`
+(see `projects/rating/federation.config.mjs`). Its manifest is served at http://localhost:4201/remoteEntry.json.
+
 ## Local Development
 
-| Command         | Description                                       |
-| --------------- | ------------------------------------------------- |
-| `npm install`   | Installs the packages to develop the Angular app  |
-| `npm start`     | Starts the Angular app                            |
-| `npm test`      | Runs tests for the Angular app                    |
-| `npm run build` | Compiles the Angular app in production mode       |
-| `npm run lint`  | Runs static code analysis using [eslint][eslint]. |
+| Command                | Description                                         |
+| ---------------------- | --------------------------------------------------- |
+| `npm install`          | Installs the packages                               |
+| `npm start`            | Starts `bookmonkey-client` (http://localhost:4200)  |
+| `npm run start:rating` | Starts the `rating` remote (http://localhost:4201)  |
+| `npm run start:all`    | Starts both apps                                    |
+| `npm test`             | Runs tests for `bookmonkey-client`                  |
+| `npm run test:rating`  | Runs tests for `rating`                             |
+| `npm run build`        | Builds `bookmonkey-client`                          |
+| `npm run build:rating` | Builds the `rating` remote                          |
 
 ## The API
 

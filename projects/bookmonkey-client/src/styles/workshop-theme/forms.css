@@ -1,0 +1,25 @@
+/* --- Form fields --- */
+@utility search-field {
+  @apply mb-4 block w-full max-w-sm rounded border border-gray-300 px-4 py-2.5;
+}
+@utility field-input {
+  @apply min-w-[250px] rounded border border-gray-300 px-5 py-3;
+}
+@utility field-label {
+  @apply mt-4 block;
+}
+@utility field-label-text {
+  @apply mb-2 block;
+}
+@utility field-error {
+  @apply block text-red-700;
+}
+@utility field-hint {
+  @apply block text-blue-500;
+}
+@utility field-collection {
+  @apply mt-4 grid gap-2 rounded-lg border border-gray-200 bg-gray-50 p-4;
+}
+@utility field-collection-row {
+  @apply flex items-center gap-2;
+}

@@ -1,0 +1,31 @@
+/* --- Buttons / button-styled links --- */
+@utility btn-primary {
+  @apply inline-block cursor-pointer rounded bg-blue-600 px-4 py-2 text-white transition-colors;
+  &:hover {
+    @apply bg-blue-700;
+  }
+  &:disabled {
+    @apply cursor-not-allowed opacity-50;
+  }
+}
+@utility btn-secondary {
+  @apply inline-block cursor-pointer rounded border border-gray-300 px-4 py-2 text-gray-700 transition-colors;
+  &:hover {
+    @apply bg-gray-50;
+  }
+}
+@utility btn-danger {
+  @apply inline-block cursor-pointer rounded border border-transparent px-3 py-1.5 text-sm text-gray-500 transition-colors;
+  &:hover {
+    @apply border-red-200 bg-red-50 text-red-700;
+  }
+}
+@utility btn-icon-danger {
+  @apply flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded border border-gray-300 text-gray-500 transition-colors;
+  &:hover {
+    @apply border-red-300 bg-red-50 text-red-700;
+  }
+}
+@utility btn-add {
+  @apply justify-self-start text-sm;
+}

@@ -1,0 +1,29 @@
+<div class="app-content">
+  <div class="book-detail-bar">
+    <a routerLink="/books" class="back-link">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-4 w-4"
+      >
+        <path d="M19 12H5" />
+        <path d="M12 19l-7-7 7-7" />
+      </svg>
+      Back to list
+    </a>
+
+    <div class="book-card-actions">
+      <a [routerLink]="['/books', 'edit', isbn()]" class="btn-secondary">Edit</a>
+      <!-- (click)="deleteBook()" once implemented -->
+      <button type="button" class="btn-danger">Delete</button>
+    </div>
+  </div>
+
+  @if (bookResource.value(); as book) {
+  <app-book-detail [book]="book" />
+  }
+</div>

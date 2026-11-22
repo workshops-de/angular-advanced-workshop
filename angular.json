@@ -2,32 +2,27 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "cli": {
-    "packageManager": "npm",
-    "analytics": false
-  },
   "projects": {
     "bookmonkey-client": {
-      "root": "",
-      "prefix": "ws",
-      "sourceRoot": "src",
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
+      "root": "projects/bookmonkey-client",
+      "sourceRoot": "projects/bookmonkey-client/src",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist",
-            "index": "src/index.html",
-            "browser": "src/main.ts",
-            "tsConfig": "./tsconfig.app.json",
-            "inlineStyleLanguage": "scss",
-            "assets": ["src/assets", "src/favicon.ico"],
-            "styles": ["@angular/material/prebuilt-themes/indigo-pink.css", "src/styles.scss"],
+            "outputPath": "dist/bookmonkey-client",
+            "index": "projects/bookmonkey-client/src/index.html",
+            "browser": "projects/bookmonkey-client/src/main.ts",
+            "tsConfig": "projects/bookmonkey-client/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/bookmonkey-client/public"
+              }
+            ],
+            "styles": ["projects/bookmonkey-client/src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -35,7 +30,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "700kb",
+                  "maximumWarning": "500kb",
                   "maximumError": "1mb"
                 },
                 {
@@ -50,6 +45,11 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "testing": {
+              "aot": false,
+              "optimization": false,
+              "extractLicenses": false
             }
           },
           "defaultConfiguration": "production"
@@ -73,47 +73,112 @@
           }
         },
         "test": {
-          "builder": "@analogjs/vitest-angular:test"
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "tsConfig": "projects/bookmonkey-client/tsconfig.spec.json",
+            "buildTarget": ":build:testing",
+            "runner": "vitest",
+            "setupFiles": ["projects/bookmonkey-client/src/test-setup.ts"]
+          }
+        }
+      }
+    },
+    "rating": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/rating",
+      "sourceRoot": "projects/rating/src",
+      "prefix": "rating",
+      "architect": {
+        "build": {
+          "builder": "@angular-architects/native-federation:build",
+          "options": {
+            "cacheExternalArtifacts": true,
+            "tsConfig": "projects/rating/tsconfig.federation.json"
+          },
+          "configurations": {
+            "production": {
+              "target": "rating:esbuild:production"
+            },
+            "development": {
+              "target": "rating:esbuild:development",
+              "dev": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-architects/native-federation:build",
+          "options": {
+            "target": "rating:serve-original:development",
+            "tsConfig": "projects/rating/tsconfig.federation.json",
+            "rebuildDelay": 500,
+            "cacheExternalArtifacts": true,
+            "dev": true,
+            "devServer": true,
+            "port": 0
+          }
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
+        },
+        "esbuild": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/rating/src/main.ts",
+            "tsConfig": "projects/rating/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/rating/public"
+              }
+            ],
+            "styles": ["projects/rating/src/styles.css"],
+            "polyfills": ["es-module-shims"]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-original": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "rating:esbuild:production"
+            },
+            "development": {
+              "buildTarget": "rating:esbuild:development"
+            }
+          },
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4201
           }
         }
       }
     }
   },
-  "schematics": {
-    "@angular-eslint/schematics:application": {
-      "setParserOptionsProject": true
-    },
-    "@angular-eslint/schematics:library": {
-      "setParserOptionsProject": true
-    },
-    "@schematics/angular:component": {
-      "type": "component"
-    },
-    "@schematics/angular:directive": {
-      "type": "directive"
-    },
-    "@schematics/angular:service": {
-      "type": "service"
-    },
-    "@schematics/angular:guard": {
-      "typeSeparator": "."
-    },
-    "@schematics/angular:interceptor": {
-      "typeSeparator": "."
-    },
-    "@schematics/angular:module": {
-      "typeSeparator": "."
-    },
-    "@schematics/angular:pipe": {
-      "typeSeparator": "."
-    },
-    "@schematics/angular:resolver": {
-      "typeSeparator": "."
-    }
+  "cli": {
+    "analytics": false
   }
 }

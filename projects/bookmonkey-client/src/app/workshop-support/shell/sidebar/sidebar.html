@@ -1,0 +1,75 @@
+@let links = pageLinks();
+
+<nav class="sidebar">
+  <span class="sidebar-brand">
+    <img src="workshops-de-logo.png" alt="" class="w-6" />
+    Book Monkey
+  </span>
+
+  <a
+    [routerLink]="links.dashboard"
+    routerLinkActive="sidebar-link-active"
+    [routerLinkActiveOptions]="{exact: true}"
+    class="sidebar-link"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="h-4 w-4"
+    >
+      <rect x="3" y="3" width="7" height="7" />
+      <rect x="14" y="3" width="7" height="7" />
+      <rect x="14" y="14" width="7" height="7" />
+      <rect x="3" y="14" width="7" height="7" />
+    </svg>
+    Dashboard
+  </a>
+
+  <hr class="sidebar-separator" />
+
+  <a
+    [routerLink]="links.books"
+    routerLinkActive="sidebar-link-active"
+    [routerLinkActiveOptions]="{exact: true}"
+    class="sidebar-link"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="h-4 w-4"
+    >
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+    </svg>
+    Books
+  </a>
+
+  <a
+    [routerLink]="links.booksCreate"
+    routerLinkActive="sidebar-link-active"
+    [routerLinkActiveOptions]="{exact: true}"
+    class="sidebar-link"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="h-4 w-4"
+    >
+      <line x1="12" y1="5" x2="12" y2="19" />
+      <line x1="5" y1="12" x2="19" y2="12" />
+    </svg>
+    Create Book
+  </a>
+</nav>

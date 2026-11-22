@@ -1,0 +1,59 @@
+<div class="app-content">
+  <h1 class="page-title">Create Book</h1>
+
+  <form class="form-fields" [formRoot]="form">
+    <label class="field-label">
+      <span class="field-label-text">ISBN</span>
+      <input class="field-input w-full" [formField]="form.isbn" />
+      @if (form.isbn().pending()) {
+      <small class="field-hint">Checking ISBN…</small>
+      } @else if (form.isbn().touched()) { @for (error of form.isbn().errors(); track error.kind) {
+      <small class="field-error">{{ error.message }}</small>
+      } }
+    </label>
+
+    <label class="field-label">
+      <span class="field-label-text">Title</span>
+      <input class="field-input w-full" [formField]="form.title" />
+      @if (form.title().touched()) { @for (error of form.title().errors(); track error.kind) {
+      <small class="field-error">{{ error.message }}</small>
+      } }
+    </label>
+
+    <label class="field-label">
+      <span class="field-label-text">Subtitle</span>
+      <input class="field-input w-full" [formField]="form.subtitle" />
+    </label>
+
+    <label class="field-label">
+      <span class="field-label-text">Author</span>
+      <input class="field-input w-full" [formField]="form.author" />
+      @if (form.author().touched()) { @for (error of form.author().errors(); track error.kind) {
+      <small class="field-error">{{ error.message }}</small>
+      } }
+    </label>
+
+    <fieldset class="field-collection">
+      <legend class="field-label-text">Co-authors</legend>
+
+      @for (coAuthor of form.coAuthors; track $index; let coAuthorIndex = $index) {
+        <app-co-author-input [formField]="coAuthor" (remove)="removeCoAuthor(coAuthorIndex)" />
+      } @empty {
+        <p class="field-hint">No co-authors yet.</p>
+      }
+
+      <button type="button" class="btn-secondary btn-add" (click)="addCoAuthor()">
+        + Add co-author
+      </button>
+    </fieldset>
+
+    <label class="field-label">
+      <span class="field-label-text">Abstract</span>
+      <input class="field-input w-full" [formField]="form.abstract" />
+    </label>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary">Save</button>
+    </div>
+  </form>
+</div>

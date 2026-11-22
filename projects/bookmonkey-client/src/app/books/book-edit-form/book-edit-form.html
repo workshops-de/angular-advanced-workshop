@@ -1,0 +1,73 @@
+<div class="app-content">
+  <h1 class="page-title">Edit Book</h1>
+
+  <form class="form-fields" [formRoot]="form">
+    <label class="field-label">
+      <span class="field-label-text">ISBN</span>
+      <input class="field-input w-full bg-gray-100 text-gray-500" [formField]="form.isbn" />
+      <small class="field-hint">
+        The ISBN cannot be changed after a book has been created.
+      </small>
+    </label>
+
+    <label class="field-label">
+      <span class="field-label-text">Title</span>
+      <input class="field-input w-full" [formField]="form.title" />
+      @if (form.title().touched()) {
+        @for (error of form.title().errors(); track error.kind) {
+          <small class="field-error">{{ error.message }}</small>
+        }
+      }
+    </label>
+
+    <label class="field-label">
+      <span class="field-label-text">Subtitle</span>
+      <input class="field-input w-full" [formField]="form.subtitle" />
+    </label>
+
+    <label class="field-label">
+      <span class="field-label-text">Author</span>
+      <input class="field-input w-full" [formField]="form.author" />
+      @if (form.author().touched()) {
+        @for (error of form.author().errors(); track error.kind) {
+          <small class="field-error">{{ error.message }}</small>
+        }
+      }
+    </label>
+
+    <label class="field-label">
+      <span class="field-label-text">Cover URL</span>
+      <input
+        class="field-input w-full"
+        [formField]="form.cover"
+        placeholder="https://example.com/cover.jpg"
+      />
+    </label>
+
+    <div class="cover-preview">
+      <img
+        class="cover-preview-image"
+        [src]="model().cover || placeholderCover"
+        alt="Cover preview"
+      />
+      <div>
+        <span class="cover-preview-label">Cover preview</span>
+        <p class="field-hint">
+          Updates as you type the URL. Falls back to the placeholder when the URL
+          is empty.
+        </p>
+      </div>
+    </div>
+
+    <label class="field-label">
+      <span class="field-label-text">Abstract</span>
+      <textarea class="field-input w-full" [formField]="form.abstract" rows="4"></textarea>
+    </label>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" [disabled]="form().invalid()">
+        Save
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,7 @@
+@if (bookResource.isLoading()) {
+  <p>Loading book...</p>
+} @else if (bookResource.error(); as error) {
+  <p>Error: {{ error.message }}</p>
+} @else if (bookResource.value(); as book) {
+  <app-book-edit-form [book]="book" (save)="saveBook($event)" />
+}

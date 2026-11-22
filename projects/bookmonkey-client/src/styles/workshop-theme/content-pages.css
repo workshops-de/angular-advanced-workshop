@@ -1,0 +1,7 @@
+/* --- Content pages --- */
+@utility about-section {
+  @apply grid h-[50vh] place-items-center text-center text-blue-800;
+}
+@utility text-link {
+  @apply text-blue-800 underline;
+}

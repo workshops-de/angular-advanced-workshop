@@ -1,0 +1,14 @@
+<div class="book-card">
+  @let currentBook = book();
+
+  <img [src]="currentBook.cover || placeholderCover" alt="" class="book-cover" />
+
+  <div class="book-card-body">
+    <h3 appBookMarker [rawText]="currentBook.title"></h3>
+    <h4 [style]="customStyle()" appBookMarker [rawText]="currentBook.author"></h4>
+    <p class="book-published">{{ currentBook.publishedAt | date: 'longDate' }}</p>
+    <div class="book-card-actions">
+      <ng-content />
+    </div>
+  </div>
+</div>
