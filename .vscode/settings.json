@@ -1,5 +1,5 @@
 {
   "search.exclude": {
-    "projects/bookmonkey-client/src/app/workshop-support": true
+    "apps/bookmonkey-client/src/app/workshop-support": true
   }
 }

@@ -16,11 +16,11 @@
 
 | Project             | Path                          | Description                                                         |
 | ------------------- | ----------------------------- | ------------------------------------------------------------------- |
-| `bookmonkey-client` | `projects/bookmonkey-client`  | The workshop app (Angular 22)                                       |
-| `rating`            | `projects/rating`             | Small 5-star rating app, **Native Federation remote** (port `4201`) |
+| `bookmonkey-client` | `apps/bookmonkey-client`  | The workshop app (Angular 22)                                       |
+| `rating`            | `apps/rating`             | Small 5-star rating app, **Native Federation remote** (port `4201`) |
 
 The `rating` app exposes its `Rating` component (`<rating-stars>`) as `./Rating`
-(see `projects/rating/federation.config.mjs`). Its manifest is served at http://localhost:4201/remoteEntry.json.
+(see `apps/rating/federation.config.mjs`). Its manifest is served at http://localhost:4201/remoteEntry.json.
 
 ## Local Development
 
