@@ -1,5 +1,5 @@
 // Generates the workshop libraries with the Nx Angular library generator.
-// Usage: node tools/generate-libs.mjs
+// Usage: npm run task:generate-libs
 import { execSync } from 'node:child_process';
 import { copyFileSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 
@@ -60,4 +60,4 @@ nx.plugins = [{ plugin: '@nx/vitest', include: ['libs/**/*'], options: { testTar
 writeFileSync('nx.json', JSON.stringify(nx, null, 2) + '\n');
 
 run('npx prettier --write libs nx.json tsconfig.base.json');
-console.log('\nLibraries generated. Next: node tools/move-to-libs.mjs');
+console.log('\nLibraries generated. Next: npm run task:move-to-libs');

@@ -17,6 +17,8 @@
     "test:rating": "ng test rating",
     "solution.next": "bash tools/next-solution.sh",
     "solution.fuzzy": "bash tools/fuzzy-solution.sh",
+    "task:generate-libs": "node tools/tasks/generate-libs.mjs",
+    "task:move-to-libs": "node tools/tasks/move-to-libs.mjs",
     "format": "prettier --write \"**/*.{js,json,css,md,ts,html}\""
   },
   "private": true,

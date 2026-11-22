@@ -1,5 +1,5 @@
 // Moves the code of bookmonkey-client into the generated libraries.
-// Usage: node tools/move-to-libs.mjs
+// Usage: npm run task:move-to-libs
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
