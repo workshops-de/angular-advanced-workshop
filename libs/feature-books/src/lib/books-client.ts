@@ -1,9 +1,11 @@
 import { HttpClient, httpResource } from '@angular/common/http';
 import { computed, inject, Service, Signal } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import * as v from 'valibot';
 import { Book, BooksCollectionSchema } from './book';
 import { BooksConfig } from './books-config';
+
+const BOOKS_API_URL = 'http://localhost:4730';
 
 @Service()
 export class BooksClient {
@@ -19,6 +21,15 @@ export class BooksClient {
       throw new Error('The books configuration is not loaded.');
     }
     return baseUrl;
+  }
+
+  /** Stream variant of `getAll()` for the Signal Store. Uses a static endpoint. */
+  list(): Observable<Book[]> {
+    return this.http
+      .get<unknown>(`${BOOKS_API_URL}/books`, {
+        params: { _start: 0, _end: 15, _sort: 'createdAt', _order: 'desc' }
+      })
+      .pipe(map(books => v.parse(BooksCollectionSchema, books)));
   }
 
   getAll() {

@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 
@@ -15,13 +15,11 @@ import { BookStore } from '../state/book-store';
   providers: [BookMarkerStore],
   templateUrl: './books-page.html'
 })
-export class BooksPage {
+export class BooksPage implements OnInit {
   router = inject(Router);
   booksClient = inject(BooksClient);
   bookMarkerStore = inject(BookMarkerStore);
   store = inject(BookStore);
-
-  booksResource = this.booksClient.getAll();
 
   booksComputed = computed(() => {
     const markTerm = this.bookMarkerStore.markTerm();
@@ -29,6 +27,10 @@ export class BooksPage {
 
     return books.filter(book => bookMatches(book, markTerm));
   });
+
+  ngOnInit() {
+    this.store.loadBooks();
+  }
 
   async goToBookDetails(book: Book) {
     await this.router.navigate(['/books', 'detail', book.isbn]);
@@ -40,6 +42,6 @@ export class BooksPage {
     }
 
     await lastValueFrom(this.booksClient.delete(book.isbn));
-    this.booksResource.reload();
+    this.store.loadBooks();
   }
 }
