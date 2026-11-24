@@ -77,7 +77,8 @@
     "typescript-eslint": "^8.73.0",
     "vite": "^8.0.0",
     "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^5.0.0"
+    "vitest": "^5.0.0",
+    "vitest-browser-angular": "^0.5.1"
   },
   "allowScripts": {
     "@parcel/watcher@2.6.0": true,
