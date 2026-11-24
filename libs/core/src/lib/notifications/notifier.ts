@@ -2,15 +2,8 @@ import { Overlay, type OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { type ComponentRef, Service, inject, signal } from '@angular/core';
 
+import { Notification, NotificationKind } from './notification';
 import { NotificationHost } from './notification-host/notification-host';
-
-export type NotificationKind = 'error' | 'success' | 'info';
-
-export interface Notification {
-  id: number;
-  kind: NotificationKind;
-  message: string;
-}
 
 const AUTO_DISMISS_MS = 4000;
 
@@ -48,14 +41,14 @@ export class Notifier {
     this._notifications.update(notifications =>
       notifications.filter(notification => notification.id !== id)
     );
-    this.hostRef?.changeDetectorRef.detectChanges();
+    this.renderHost();
   }
 
   private show(message: string, kind: NotificationKind): void {
     this.ensureHost();
     const id = this.nextId++;
     this._notifications.update(notifications => [...notifications, { id, kind, message }]);
-    this.hostRef?.changeDetectorRef.detectChanges();
+    this.renderHost();
 
     this.timeouts.set(
       id,
@@ -79,5 +72,12 @@ export class Notifier {
      * trigger a check on it explicitly whenever `_notifications` changes.
      */
     this.hostRef = this.overlayRef.attach(new ComponentPortal(NotificationHost));
+    this.hostRef.setInput('notifications', this._notifications());
+    this.hostRef.instance.dismissed.subscribe(id => this.dismiss(id));
+  }
+
+  private renderHost(): void {
+    this.hostRef?.setInput('notifications', this._notifications());
+    this.hostRef?.changeDetectorRef.detectChanges();
   }
 }

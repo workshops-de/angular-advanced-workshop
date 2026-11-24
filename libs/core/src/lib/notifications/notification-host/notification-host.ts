@@ -1,11 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
-import { Notifier } from '../notifier';
+import { Notification } from '../notification';
 
 @Component({
   selector: 'app-notification-host',
   templateUrl: './notification-host.html'
 })
 export class NotificationHost {
-  protected notifier = inject(Notifier);
+  readonly notifications = input.required<Notification[]>();
+  readonly dismissed = output<number>();
 }

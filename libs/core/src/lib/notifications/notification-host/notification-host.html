@@ -1,5 +1,5 @@
 <div class="toast-host">
-  @for (notification of notifier.notifications(); track notification.id) {
+  @for (notification of notifications(); track notification.id) {
   <div
     class="toast"
     [class.toast-error]="notification.kind === 'error'"
@@ -11,7 +11,7 @@
     <button
       type="button"
       class="toast-close"
-      (click)="notifier.dismiss(notification.id)"
+      (click)="dismissed.emit(notification.id)"
       aria-label="Meldung schließen"
     >
       &times;

@@ -1,0 +1,23 @@
+{
+  "name": "architecture-tests",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/architecture-tests/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": [
+    "type:test"
+  ],
+  "// targets": "to see all targets run: nx show project architecture-tests --web",
+  "targets": {
+    "test": {
+      "inputs": [
+        "default",
+        "{workspaceRoot}/tsconfig.base.json",
+        "{workspaceRoot}/libs/**/*.ts",
+        "{workspaceRoot}/apps/**/*.ts",
+        "!{workspaceRoot}/libs/**/*.spec.ts",
+        "!{workspaceRoot}/apps/**/*.spec.ts"
+      ]
+    }
+  }
+}
