@@ -14,23 +14,23 @@ describe('BookCard template', () => {
 
   let fixture: ComponentFixture<BookCard>;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({ providers: [BookMarkerStore] });
 
     fixture = TestBed.createComponent(BookCard);
     fixture.componentRef.setInput('book', book);
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
-  it('should display the book title', () => {
+  it('should display the book title', async () => {
     const title = fixture.nativeElement.querySelector('h3');
 
-    expect(title.textContent).toContain(book.title);
+    await expect.poll(() => title.textContent).toContain(book.title);
   });
 
-  it('should display the book author', () => {
+  it('should display the book author', async () => {
     const author = fixture.nativeElement.querySelector('h4');
 
-    expect(author.textContent).toContain(book.author);
+    await expect.poll(() => author.textContent).toContain(book.author);
   });
 });
