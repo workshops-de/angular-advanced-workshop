@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { REMOTE_MODULE_LOADER } from '@bookmonkey/core';
 import { provideRouter, Router, withComponentInputBinding } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { of } from 'rxjs';
@@ -21,7 +22,9 @@ describe('Book navigation', () => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter(bookRoutes, withComponentInputBinding()),
-        { provide: BooksClient, useValue: { list: () => of([mobyDick]) } }
+        { provide: BooksClient, useValue: { list: () => of([mobyDick]) } },
+        // The rating remote is not part of this test: its loader never resolves.
+        { provide: REMOTE_MODULE_LOADER, useValue: () => new Promise<never>(() => undefined) }
       ]
     });
   });
@@ -32,6 +35,8 @@ describe('Book navigation', () => {
     await page.getByRole('link', { name: 'More' }).click();
 
     await expect.poll(() => TestBed.inject(Router).url).toBe(`/detail/${mobyDick.isbn}`);
-    await expect.element(page.getByRole('heading', { level: 1, name: mobyDick.title })).toBeVisible();
+    await expect
+      .element(page.getByRole('heading', { level: 1, name: mobyDick.title }))
+      .toBeVisible();
   });
 });

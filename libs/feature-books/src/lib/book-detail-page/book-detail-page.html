@@ -27,5 +27,9 @@
   <p>Loading book...</p>
   } @else if (book(); as book) {
   <app-book-detail [book]="book" />
+  <section class="book-detail-rating">
+    <h2>Your rating</h2>
+    <app-remote-rating [(value)]="rating" />
+  </section>
   }
 </div>
