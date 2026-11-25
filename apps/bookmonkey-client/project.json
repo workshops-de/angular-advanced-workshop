@@ -6,6 +6,44 @@
   "prefix": "app",
   "targets": {
     "build": {
+      "executor": "@angular-architects/native-federation:build",
+      "options": {
+        "cacheExternalArtifacts": true,
+        "tsConfig": "apps/bookmonkey-client/tsconfig.federation.json"
+      },
+      "configurations": {
+        "production": {
+          "target": "bookmonkey-client:esbuild:production"
+        },
+        "development": {
+          "target": "bookmonkey-client:esbuild:development",
+          "dev": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-architects/native-federation:build",
+      "options": {
+        "target": "bookmonkey-client:serve-original:development",
+        "tsConfig": "apps/bookmonkey-client/tsconfig.federation.json",
+        "rebuildDelay": 500,
+        "cacheExternalArtifacts": true,
+        "dev": true,
+        "devServer": true,
+        "port": 0
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular/build:extract-i18n",
+      "options": {
+        "buildTarget": "bookmonkey-client:build"
+      }
+    },
+    "test": {
+      "executor": "@analogjs/vitest-angular:test"
+    },
+    "esbuild": {
       "executor": "@angular/build:application",
       "defaultConfiguration": "production",
       "outputs": ["{options.outputPath}"],
@@ -21,7 +59,8 @@
           }
         ],
         "styles": ["apps/bookmonkey-client/src/styles.css"],
-        "scripts": []
+        "scripts": [],
+        "polyfills": ["es-module-shims"]
       },
       "configurations": {
         "production": {
@@ -51,27 +90,21 @@
         }
       }
     },
-    "serve": {
+    "serve-original": {
       "continuous": true,
       "executor": "@angular/build:dev-server",
       "defaultConfiguration": "development",
       "configurations": {
         "production": {
-          "buildTarget": "bookmonkey-client:build:production"
+          "buildTarget": "bookmonkey-client:esbuild:production"
         },
         "development": {
-          "buildTarget": "bookmonkey-client:build:development"
+          "buildTarget": "bookmonkey-client:esbuild:development"
         }
-      }
-    },
-    "extract-i18n": {
-      "executor": "@angular/build:extract-i18n",
+      },
       "options": {
-        "buildTarget": "bookmonkey-client:build"
+        "port": 4200
       }
-    },
-    "test": {
-      "executor": "@analogjs/vitest-angular:test"
     }
   },
   "tags": ["type:app"]

@@ -1,9 +1,11 @@
-import { registerLocaleData } from '@angular/common';
-import localeDe from '@angular/common/locales/de';
-import { bootstrapApplication } from '@angular/platform-browser';
-import { App } from './app/app';
-import { appConfig } from './app/app.config';
+import { initFederation } from '@angular-architects/native-federation';
 
-registerLocaleData(localeDe);
+async function main() {
+  const { loadRemoteModule } = await initFederation('federation.manifest.json', {
+    hostRemoteEntry: { url: './remoteEntry.json' }
+  });
+  const { bootstrap } = await import('./bootstrap');
+  await bootstrap(loadRemoteModule);
+}
 
-bootstrapApplication(App, appConfig).catch(err => console.error(err));
+main().catch(err => console.error(err));
