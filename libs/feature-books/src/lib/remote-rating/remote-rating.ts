@@ -1,52 +1,41 @@
-import {
-  Component,
-  effect,
-  inject,
-  model,
-  resource,
-  Type,
-  twoWayBinding,
-  viewChild,
-  ViewContainerRef
-} from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, inject, model, resource } from '@angular/core';
 import { REMOTE_MODULE_LOADER } from '@bookmonkey/core';
 
-/** What the `rating` remote exposes as `./Rating` (see apps/rating/federation.config.mjs). */
-type RatingModule = { Rating: Type<unknown> };
-
 /**
- * Loads the 5-star rating from the `rating` remote at runtime and renders it.
+ * Shows the 5-star rating of the `rating` remote.
+ *
+ * The remote exposes a Web Component (`./RatingElement`). Loading the module registers
+ * `<rating-stars-element>`. The host does not care which Angular version the remote uses:
+ * it only talks to the element via properties and DOM events.
  * If the remote is not reachable, the host stays usable and shows a hint instead.
  */
 @Component({
   selector: 'app-remote-rating',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
-    @if (rating.error()) {
+    @if (rating.hasValue()) {
+      <rating-stars-element [value]="value()" (valueChange)="onValueChange($event)" />
+    } @else if (rating.error()) {
       <p class="remote-rating-unavailable">The rating is currently not available.</p>
-    } @else if (rating.isLoading()) {
+    } @else {
       <p>Loading rating...</p>
     }
-    <ng-container #host />
   `
 })
 export class RemoteRating {
   private readonly loadRemoteModule = inject(REMOTE_MODULE_LOADER);
-  private readonly host = viewChild.required('host', { read: ViewContainerRef });
 
   readonly value = model(0);
 
+  /** Resolves as soon as the remote registered the custom element. */
   protected readonly rating = resource({
-    loader: () => this.loadRemoteModule<RatingModule>('rating', './Rating')
+    loader: async () => {
+      await this.loadRemoteModule('rating', './RatingElement');
+      return true;
+    }
   });
 
-  constructor() {
-    effect(() => {
-      const remote = this.rating.hasValue() ? this.rating.value() : undefined;
-      if (remote) {
-        this.host().createComponent(remote.Rating, {
-          bindings: [twoWayBinding('value', this.value)]
-        });
-      }
-    });
+  protected onValueChange(event: Event): void {
+    this.value.set((event as CustomEvent<number>).detail);
   }
 }
