@@ -1,4 +1,5 @@
-import { render, screen } from '@testing-library/angular';
+import { provideRouter } from '@angular/router';
+import { render } from 'vitest-browser-angular';
 import { App } from './app';
 
 describe('App', () => {
@@ -11,11 +12,10 @@ describe('App', () => {
   });
 
   it('greets the attendee', async () => {
-    const { fixture } = await render(App);
+    const screen = await render(App, { providers: [provideRouter([])] });
 
     await vi.advanceTimersByTimeAsync(6000);
-    fixture.detectChanges();
 
-    expect(screen.getByText(/Hello Angularian/)).toBeInTheDocument();
+    await expect.element(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Hello Angularian');
   });
 });
